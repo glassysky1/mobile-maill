@@ -1,19 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <m-header></m-header>
+    <div class="m-tab-wrapper">
+      <m-tab></m-tab>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
-
+<script>
+import MTab from "components/m-tab/m-tab.vue";
+import MHeader from "components/m-header/m-header";
+import {getGoods} from "api/goods";
+export default {
+  components: {
+    MTab,
+    MHeader
+  },
+  async mounted(){
+    const {data:res} = await getGoods()
+    console.log(res);
+     
+  }
+};
+</script>
 <style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+html, body, #app
+  background-color #fff
+  height 100%
+  width 100%
+  position relative
+  .m-tab-wrapper
+    position absolute
+    bottom 0
+    left 0
+    width 100%
 </style>
