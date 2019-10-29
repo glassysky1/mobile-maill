@@ -1,3 +1,5 @@
 export default{
-  userInfo:{}
+  userInfo:{},
+  tipMsg:'',
+  userStatus:false
 }

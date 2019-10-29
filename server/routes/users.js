@@ -63,7 +63,7 @@ router.post('/login', async (ctx) => {
   } else {
     ctx.body = {
       code: -1,
-      msg: '登录失败'
+      msg: '用户名或密码错误'
     }
   }
 })
@@ -73,61 +73,104 @@ router.get('/getUser', async (ctx) => {
     const user = await Users.findOne({
       username: ctx.cookies.get('username')
     })
-    const {cartList,orderList,username,addressList} = user
+    const { cartList, orderList, username, addressList } = user
     const userInfo = {
       cartList,
       orderList,
       username,
       addressList
     }
-  
+
     ctx.body = {
+      code:0,
       userInfo,
-      msg:'已登录'
+      msg: '已登录'
     }
   } else {
     ctx.body = {
+      code:-1,
       userInfo: '',
-      msg:'未登录'
+      msg: '未登录'
     }
   }
 })
 
 
 //查找密保
-router.post('/findPwdQuestion',async (ctx) =>{
+router.post('/findPwdQuestion', async (ctx) => {
   const { username } = ctx.request.body
   const user = await Users.findOne({
     username
   })
-  if(user){
-    const {pwdQuestion} = user
-    ctx.body ={
-      code:0,
+  if (user) {
+    const { pwdQuestion } = user
+    ctx.body = {
+      code: 0,
       pwdQuestion
     }
-  }else{
-    ctx.body ={
-      code:-1,
-      msg:'无此用户',
-      pwdQuestion:''
+  } else {
+    ctx.body = {
+      code: -1,
+      msg: '无此用户',
+      pwdQuestion: ''
     }
   }
 })
 
+//核实密保密码
+router.post('/checkPwdAnswer', async (ctx) => {
+  const { username, pwdAnswer } = ctx.request.body
+  const user = await Users.findOne({
+    username,
+    pwdAnswer
+  })
+  if (user) {
+    ctx.body = {
+      code: 0,
+      msg: '密保答案正确'
+    }
+  } else {
+    ctx.body = {
+      code: -1,
+      msg: '密保答案错误'
+    }
+  }
+})
+//设置新密码
+router.post('/updatePassword',async (ctx) =>{
+  const { username,pwdAnswer,password} = ctx.request.body
+  const user = await Users.where({
+    username,
+    pwdAnswer
+  }).update({
+    password
+  })
+
+  if(user){
+    ctx.body ={
+      code:0,
+      msg:'密码修改成功'
+    }
+  }else{
+    ctx.body={
+      code:-1,
+      msg:'密码修改失败'
+    }
+  }
+})
 
 //登出
-router.get('/exit', async (ctx) => {
+router.get('/logout', async (ctx) => {
   if (ctx.cookies.get('username')) {
-     ctx.cookies.set('username', "", { maxAge: 0 })
+    ctx.cookies.set('username', "", { maxAge: 0 })
     ctx.body = {
       msg: '退出成功',
       code: 0,
     }
-  } else{
-    ctx.body={
-      msg:'已退出',
-      code:0
+  } else {
+    ctx.body = {
+      msg: '已退出',
+      code: -1
     }
   }
 })

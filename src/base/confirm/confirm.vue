@@ -15,17 +15,6 @@
 </template>
 
 <script>
-// const SEARCH_KEY = "__search__";
-// import storage from "good-storage";
-// let path = 'variable1.styl'
-// if (storage.get(SEARCH_KEY, []).length) {
-//   path = "variable.styl";
-//   console.log(1);
-  
-// }
-// console.log(path);
-// import "common/stylus/variable.styl";
-// import(`common/stylus/${path}`)
 export default {
   data() {
     return {

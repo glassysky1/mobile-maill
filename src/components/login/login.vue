@@ -1,5 +1,5 @@
 <template>
-  <form class="login"  @submit.prevent.stop="login">
+  <form class="login" @submit.prevent.stop="login">
     <div class="header-wrapper">
       <div class="header">
         <div class="logo-wrapper">
@@ -11,15 +11,15 @@
     <div class="content">
       <div class="input">
         <span>用户名:</span>
-        <input v-model="username" class="box" required/>
-        <span class="close" @click="username=''">
+        <input v-model="username" class="box" required />
+        <span class="close" v-show="username" @click="username=''">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
       <div class="input">
         <span>密码:</span>
-        <input v-model="password" @click="password=''" class="box" type="password" required/>
-        <span class="close">
+        <input v-model="password" @click="password=''" class="box" type="password" required />
+        <span class="close" v-show="password" @click="password">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
@@ -28,54 +28,54 @@
       <button class="btn" type="submit">
         <span class="text">立即登录</span>
       </button>
-      <router-link tag="button" to="/newpassword" class="btn" >
+      <router-link tag="button" to="/newpassword" class="btn">
         <span class="text">忘记密码？</span>
       </router-link>
-      <router-link tag="button" to="/register" class="btn" >
+      <router-link tag="button" to="/register" class="btn">
         <span class="text">没有账号？注册</span>
       </router-link>
     </div>
-       <tip ref="tip" :title="tipMsg"></tip>
   </form>
 </template>
 
 <script>
-import Tip from "base/tip/tip";
-import { login } from "api/user";
+import { login, getUser } from "api/user";
+import { mapMutations } from "vuex";
 import CryptoJS from "crypto-js";
 export default {
-  data(){
-    return{
-      username:'',
-      password:'',
+  data() {
+    return {
+      username: "",
+      password: "",
       tipMsg: ""
-    }
+    };
   },
-  components:{
-    Tip
-  },
-  methods:{
-   async login(){
-        const {username,password} = this
-        const {status,data:{msg,code}} = await login({
-          username,
-          password:CryptoJS.MD5(password).toString()
-        })
-        if(status ===200){
-          if(code ===0){
-            this.tipMsg = msg
-            this.$refs.tip.show()
-            setTimeout(() => {
-              this.$router.push({
-                path:'/my'
-              })
-            }, 2000);
-          }else{
-            this.tipMsg = msg
-            this.$refs.tip.show()
-          }
+  methods: {
+    async login() {
+      const { username, password } = this;
+      const {
+        status,
+        data: { msg, code }
+      } = await login({
+        username,
+        password: CryptoJS.MD5(password).toString()
+      });
+      if (status === 200) {
+        if (code === 0) {
+          this.setTip(msg);
+          this.$router.push({
+            path: "/my"
+          });
+          this.setUserStatus(true)
+        } else {
+          this.setTip(msg);
         }
-    }
+      }
+    },
+    ...mapMutations({
+      setTip: "SET_TIP",
+      setUserStatus:'SET_USER_STATUS'
+    })
   }
 };
 </script>
@@ -152,7 +152,7 @@ export default {
       line-height 44px
       text-align center
       margin-bottom 10px
-      border none 
+      border none
       .text
         color #ffffff
       &:last-child

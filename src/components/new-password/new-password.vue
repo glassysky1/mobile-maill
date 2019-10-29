@@ -1,5 +1,5 @@
 <template>
-  <form class="new-password">
+  <form class="new-password" @submit.prevent.stop="newPassword">
     <div class="header-wrapper">
       <div class="header">
         <div class="logo-wrapper">
@@ -21,13 +21,14 @@
         <div v-if="pwdQuestion">密保问题:{{pwdQuestion}}</div>
       </div>
       <div class="input" v-if="pwdQuestion">
-        <span>答案:</span>
-        <input class="box" v-model="pwdAnswer" />
-        <span class="close" v-show="rightFlag">
+        <span v-if="!rightAnswerFlag">答案:</span>
+        <span v-if="rightAnswerFlag">答案正确:</span>
+        <input class="box" @input="inputAnswer" v-model="pwdAnswer" />
+        <span class="close" v-show="rightUserFlag">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
-      <div class="input">
+      <div class="input" v-show="rightAnswerFlag">
         <span>新密码:</span>
         <input class="box" v-model="password" type="password" />
         <span class="close" v-show="password.length">
@@ -36,7 +37,7 @@
       </div>
     </div>
     <div class="login-reister">
-      <button class="btn" >
+      <button class="btn">
         <span class="text">确定</span>
       </button>
     </div>
@@ -45,7 +46,9 @@
 
 <script>
 import _ from "lodash";
-import { findPwdQuestion } from "api/user";
+import CryptoJS from "crypto-js";
+import { findPwdQuestion,checkPwdAnswer,updatePassword } from "api/user";
+import { mapActions, mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -53,16 +56,57 @@ export default {
       password: "",
       pwdQuestion:'',
       pwdAnswer:'',
-      rightFlag:false
+      rightUserFlag:false,
+      rightAnswerFlag:false
+
     };
   },
   methods:{
     // input(){}
+    //输入用户名
      input: _.debounce(async function() {
       const { status, data:{pwdQuestion} } = await findPwdQuestion(this.username);
         this.pwdQuestion = pwdQuestion
       
-    }, 300)
+    }, 300),
+    //输入密保答案
+    inputAnswer:_.debounce(async function() {
+      console.log(1);
+      
+      const { status, data:{code,msg} } = await checkPwdAnswer(this.username,this.pwdAnswer);
+      console.log(status);
+      console.log(code);
+      
+      if(status === 200){
+        if(code===0){
+          this.rightAnswerFlag =true
+        }
+      }
+
+      
+    }, 300),
+
+    async newPassword(){
+      const {username,pwdAnswer,password} = this
+      const {status,data:{code,msg}} = await updatePassword({
+        username,
+        pwdAnswer,
+        password:CryptoJS.MD5(password).toString()
+      })
+        if(status ===200){
+          if(code ===0){
+            this.setTip(msg)
+            this.$router.push({
+              path:'/login'
+            })
+          }else{
+            this.setTip(msg)
+          }
+        }
+    },
+    ...mapMutations({
+      setTip:'SET_TIP'
+    })
   }
   ,
    mounted() {

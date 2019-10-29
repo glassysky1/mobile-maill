@@ -44,14 +44,13 @@
         <span class="text">注册</span>
       </button>
     </div>
-    <tip ref="tip" :title="tipMsg"></tip>
   </form>
 </template>
 
 <script>
 import CryptoJS from "crypto-js";
-import Tip from "base/tip/tip";
 import { register } from "api/user";
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -61,11 +60,7 @@ export default {
       pwdQuestion: "",
       pwdAnswer: "",
       pwdCls: false,
-      tipMsg: ""
     };
-  },
-  components: {
-    Tip
   },
   watch: {
     cPassword(value) {
@@ -84,8 +79,8 @@ export default {
     async register() {
       const { username, password, cPassword, pwdQuestion, pwdAnswer } = this;
       if (password != cPassword) {
-        this.tipMsg = "密码不一致";
-        this.$refs.tip.show();
+        this.setTip('密码不一致')
+        this.cPassword = ''
         return;
       }
       
@@ -101,22 +96,20 @@ export default {
       );
       if (status === 200) {
         if (code === 0) {
-          this.tipMsg = msg;
-          this.$refs.tip.show();
-          setTimeout(() => {
+          this.setTip(msg)
             this.$router.push({
               path: "/login"
             });
-          }, 2000);
         } else {
-          this.tipMsg = msg;
-          this.$refs.tip.show();
+          this.setTip(msg)
         }
       } else {
-        this.tipMsg = msg;
-        this.$refs.tip.show();
+          this.setTip(msg)        
       }
-    }
+    },
+      ...mapMutations({
+      setTip:'SET_TIP'
+    })
   }
 };
 </script>
