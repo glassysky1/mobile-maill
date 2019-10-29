@@ -10,16 +10,35 @@
 <script>
 import MTab from "components/m-tab/m-tab.vue";
 import MHeader from "components/m-header/m-header";
-import {getGoods} from "api/goods";
+import { getGoods } from "api/goods";
+import { getUser } from "api/user";
+import { mapMutations } from "vuex";
 export default {
   components: {
     MTab,
     MHeader
   },
-  async mounted(){
-    const {data:res} = await getGoods()
+  methods: {
+    async _getUser() {
+      //登录状态
+      const {
+        status,
+        data: { msg, userInfo }
+      } = await getUser();
+      if (status === 200) {
+        console.log(msg);
+        console.log(userInfo);
+        this.setUserInfo(userInfo)
+      }
+    },
+    ...mapMutations({
+      setUserInfo:'SET_UER_INFO'
+    })
+  },
+  async mounted() {
+    this._getUser();
+    const { data: res } = await getGoods();
     console.log(res);
-     
   }
 };
 </script>

@@ -14,7 +14,9 @@ const index = require('./routes/index')
 const mongoose = require('mongoose')
 const dbConfig = require('./dbs/config')
 const goods = require('./routes/goods')
+const users = require('./routes/users')
 //数据库进行连接
+mongoose.set('useCreateIndex', true) //加上这个
 mongoose.connect(dbConfig.dbs, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -48,6 +50,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(goods.routes(), goods.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

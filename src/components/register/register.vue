@@ -1,5 +1,5 @@
 <template>
-  <div class="register">
+  <form class="register" @submit.prevent.stop="register">
     <div class="header-wrapper">
       <div class="header">
         <div class="logo-wrapper">
@@ -11,37 +11,114 @@
     <div class="content">
       <div class="input">
         <span>用户名:</span>
-        <input class="box" />
-        <span class="close">
+        <input class="box" v-model="username" required />
+        <span class="close" @click="username=''" v-show="username.length">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
       <div class="input">
         <span>密码:</span>
-        <input class="box" type="password" />
-        <span class="close">
+        <input class="box" v-model="password" required type="password" />
+        <span class="close" @click="password=''" v-show="password.length">
+          <i class="iconfont icon-cha"></i>
+        </span>
+      </div>
+      <div class="input" :class="{'active': pwdCls}">
+        <span>确认密码:</span>
+        <input class="box" v-model="cPassword" required type="password" />
+        <span class="close" @click="cPassword=''" v-show="cPassword.length">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
       <div class="question">
         <div>设置密保，请输入密保问题:</div>
-        <input class="box" />
+        <input class="box" v-model="pwdQuestion" required />
       </div>
       <div class="question">
         <div>设置密保，请输入密保答案:</div>
-        <input class="box" />
+        <input class="box" v-model="pwdAnswer" required />
       </div>
     </div>
     <div class="login-reister">
-      <div class="btn">
+      <button class="btn" type="submit">
         <span class="text">注册</span>
-      </div>
+      </button>
     </div>
-  </div>
+    <tip ref="tip" :title="tipMsg"></tip>
+  </form>
 </template>
 
 <script>
-export default {};
+import CryptoJS from "crypto-js";
+import Tip from "base/tip/tip";
+import { register } from "api/user";
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      cPassword: "",
+      pwdQuestion: "",
+      pwdAnswer: "",
+      pwdCls: false,
+      tipMsg: ""
+    };
+  },
+  components: {
+    Tip
+  },
+  watch: {
+    cPassword(value) {
+      if (!value) {
+        this.pwdCls = false;
+      } else {
+        if (value != this.password) {
+          this.pwdCls = true;
+        } else {
+          this.pwdCls = false;
+        }
+      }
+    }
+  },
+  methods: {
+    async register() {
+      const { username, password, cPassword, pwdQuestion, pwdAnswer } = this;
+      if (password != cPassword) {
+        this.tipMsg = "密码不一致";
+        this.$refs.tip.show();
+        return;
+      }
+      
+      const {
+        status,
+        data: { code, msg }
+      } = await register({
+        username,
+        password:CryptoJS.MD5(password).toString(),
+        pwdQuestion,
+        pwdAnswer
+      }
+      );
+      if (status === 200) {
+        if (code === 0) {
+          this.tipMsg = msg;
+          this.$refs.tip.show();
+          setTimeout(() => {
+            this.$router.push({
+              path: "/login"
+            });
+          }, 2000);
+        } else {
+          this.tipMsg = msg;
+          this.$refs.tip.show();
+        }
+      } else {
+        this.tipMsg = msg;
+        this.$refs.tip.show();
+      }
+    }
+  }
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -79,6 +156,8 @@ export default {};
       margin-bottom 10px
       align-items center
       border-bottom 1px solid #eeeeee
+      &.active
+        border-bottom 2px solid red
       span
         color #4a4a4a
         flex 0 0 50px
@@ -109,6 +188,7 @@ export default {};
     left 5%
     bottom 20%
     .btn
+      border none
       width 100%
       height 44px
       background-color #ff6700

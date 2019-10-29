@@ -1,87 +1,78 @@
 <template>
-  <form class="login"  @submit.prevent.stop="login">
+  <form class="new-password">
     <div class="header-wrapper">
       <div class="header">
         <div class="logo-wrapper">
           <img src="./logo.png" width="48" height="48" alt />
         </div>
-        <div class="text">大米账号登录</div>
+        <div class="text">设置新密码</div>
       </div>
     </div>
     <div class="content">
       <div class="input">
         <span>用户名:</span>
-        <input v-model="username" class="box" required/>
-        <span class="close" @click="username=''">
+        <input class="box" @input="input" v-model="username" />
+        <span class="close" v-show="username.length">
+          <i class="iconfont icon-cha"></i>
+        </span>
+      </div>
+      <div class="question" v-if="username">
+        <div v-if="!pwdQuestion && username">未找到该用户</div>
+        <div v-if="pwdQuestion">密保问题:{{pwdQuestion}}</div>
+      </div>
+      <div class="input" v-if="pwdQuestion">
+        <span>答案:</span>
+        <input class="box" v-model="pwdAnswer" />
+        <span class="close" v-show="rightFlag">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
       <div class="input">
-        <span>密码:</span>
-        <input v-model="password" @click="password=''" class="box" type="password" required/>
-        <span class="close">
+        <span>新密码:</span>
+        <input class="box" v-model="password" type="password" />
+        <span class="close" v-show="password.length">
           <i class="iconfont icon-cha"></i>
         </span>
       </div>
     </div>
     <div class="login-reister">
-      <button class="btn" type="submit">
-        <span class="text">立即登录</span>
+      <button class="btn" >
+        <span class="text">确定</span>
       </button>
-      <router-link tag="button" to="/newpassword" class="btn" >
-        <span class="text">忘记密码？</span>
-      </router-link>
-      <router-link tag="button" to="/register" class="btn" >
-        <span class="text">没有账号？注册</span>
-      </router-link>
     </div>
-       <tip ref="tip" :title="tipMsg"></tip>
   </form>
 </template>
 
 <script>
-import Tip from "base/tip/tip";
-import { login } from "api/user";
-import CryptoJS from "crypto-js";
+import _ from "lodash";
+import { findPwdQuestion } from "api/user";
 export default {
-  data(){
-    return{
-      username:'',
-      password:'',
-      tipMsg: ""
-    }
-  },
-  components:{
-    Tip
+  data() {
+    return {
+      username: "",
+      password: "",
+      pwdQuestion:'',
+      pwdAnswer:'',
+      rightFlag:false
+    };
   },
   methods:{
-   async login(){
-        const {username,password} = this
-        const {status,data:{msg,code}} = await login({
-          username,
-          password:CryptoJS.MD5(password).toString()
-        })
-        if(status ===200){
-          if(code ===0){
-            this.tipMsg = msg
-            this.$refs.tip.show()
-            setTimeout(() => {
-              this.$router.push({
-                path:'/my'
-              })
-            }, 2000);
-          }else{
-            this.tipMsg = msg
-            this.$refs.tip.show()
-          }
-        }
-    }
+    // input(){}
+     input: _.debounce(async function() {
+      const { status, data:{pwdQuestion} } = await findPwdQuestion(this.username);
+        this.pwdQuestion = pwdQuestion
+      
+    }, 300)
+  }
+  ,
+   mounted() {
+     
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.login
+.new-password
   position fixed
   left 0
   top 0
@@ -124,15 +115,13 @@ export default {
         flex 1
         outline none
         height 30px
-      .close
-        flex 0 0 20px
-        width 20px
+    .close
+      flex 0 0 20px
+      width 20px
     .question
       color #4a4a4a
-      height 50px
       padding-top 10px
       margin-bottom 10px
-      border-bottom 1px solid #eeeeee
       display flex
       flex-direction column
       .box
@@ -151,13 +140,8 @@ export default {
       border-radius 5px
       line-height 44px
       text-align center
+      border none
       margin-bottom 10px
-      border none 
       .text
         color #ffffff
-      &:last-child
-        background #fff
-        .text
-          color #000000
-        border 1px solid #cccccc
 </style>

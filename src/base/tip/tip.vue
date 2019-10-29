@@ -55,5 +55,5 @@ export default {
     &.bounce-enter,&.bounce-leave-to
       opacity 0
     .title
-      font-size 12px
+      font-size 16px
 </style>

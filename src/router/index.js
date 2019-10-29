@@ -5,7 +5,7 @@ import Cart from 'components/cart/cart';
 import My from 'components/my/my';
 import Login from 'components/login/login';
 import Register from 'components/register/register';
-import findPassword from 'components/find-password/find-password';
+import NewPassword from 'components/new-password/new-password';
 
 Vue.use(VueRouter)
 
@@ -35,8 +35,8 @@ const routes = [
     component:Register
   },
   {
-    path:'/findpassword',
-    component:findPassword
+    path:'/newpassword',
+    component: NewPassword
   }
 ]
 
