@@ -6,7 +6,7 @@ import My from 'components/my/my';
 import Login from 'components/login/login';
 import Register from 'components/register/register';
 import NewPassword from 'components/new-password/new-password';
-
+import MyAddress from "components/my-address/my-address";
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,6 +37,10 @@ const routes = [
   {
     path:'/newpassword',
     component: NewPassword
+  },
+  {
+    path:'/myaddress',
+    component:MyAddress
   }
 ]
 

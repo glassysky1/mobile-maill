@@ -41,12 +41,12 @@
       </div>
     </div>
     <div class="my-service">
-      <div class="my-address">
+      <router-link class="my-address" tag="div" to="myaddress" >
         <span class="icon">
           <i class="iconfont icon-dizhi"></i>
         </span>
         <span class="text">我的收货地址</span>
-      </div>
+      </router-link>
     </div>
     <div class="logout-btn" v-show="userStatus" @click="logout">
       <span class="text">退出登录</span>

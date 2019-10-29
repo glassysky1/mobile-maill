@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <m-header></m-header>
     <div class="m-tab-wrapper">
       <m-tab></m-tab>
     </div>
@@ -11,7 +10,6 @@
 <script>
 import Tip from "base/tip/tip";
 import MTab from "components/m-tab/m-tab.vue";
-import MHeader from "components/m-header/m-header";
 import { getGoods } from "api/goods";
 import { getUser } from "api/user";
 import { mapMutations, mapGetters } from "vuex";
@@ -35,7 +33,6 @@ export default {
   },
   components: {
     MTab,
-    MHeader,
     Tip
   },
   methods: {
