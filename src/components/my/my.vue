@@ -96,9 +96,6 @@ export default {
       setUserStatus:'SET_USER_STATUS'
     })
   },
-  mounted() {
-    console.log(this.userInfo);
-  }
 };
 </script>
 

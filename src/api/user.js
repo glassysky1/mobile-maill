@@ -50,7 +50,7 @@ export const deleteAddress = (addressId) => axios.post('/users/deleteAddress', {
   addressId
 })
 
-//查找地址
+//查找地址 (不需要，已经用第二种方法来获取)
 export const findAddress = (addressId) => axios.post('/users/findAddress', {
   addressId
 })

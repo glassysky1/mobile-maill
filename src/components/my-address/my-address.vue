@@ -24,7 +24,9 @@
     <router-link tag="div" to="/myaddress/addaddress" class="new">
       <span class="text">新建地址</span>
     </router-link>
-    <router-view></router-view>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
     <confirm ref="confirm" @confirm="confirm" text="确定要删除此地址？"></confirm>
   </div>
 </template>
@@ -38,7 +40,7 @@ export default {
   data() {
     return {
       searchFlag: false,
-      addressId: "",
+      addressId: ""
     };
   },
   components: {
@@ -69,7 +71,7 @@ export default {
     },
     deleteAddress(addressId) {
       this.addressId = addressId;
-       
+
       // if(isDefault){
       //   //如果是默认地址的话，就不给删
       //   let msg = "默认地址，无法删除"
@@ -79,11 +81,10 @@ export default {
       this.$refs.confirm.show();
     },
     async editAddress(addressId) {
-       this.$router.push({
-            path:`/myaddress/editaddress`,
-            query:{addressId}
-          })
-   
+      this.$router.push({
+        path: `/myaddress/editaddress`,
+        query: { addressId }
+      });
     },
     ...mapMutations({
       setTip: "SET_TIP",
@@ -161,4 +162,8 @@ export default {
     left 50%
     top 50%
     transform translate3d(-50%, -50%, 0)
+.slide-enter-active,.slide-leave-active
+  transition all .4s
+.slide-enter,.slide-leave-to
+  transform translate3d(100%,0,0)
 </style>

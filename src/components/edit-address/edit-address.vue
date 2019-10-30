@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { findAddress,editAddress } from "api/user";
+import { findAddress, editAddress } from "api/user";
 import headerBack from "base/header-back/header-back";
 import { mapMutations, mapGetters } from "vuex";
 export default {
@@ -72,13 +72,16 @@ export default {
       streetName: "",
       postcode: "",
       isDefault: false,
-      addressId:parseInt(this.$route.query.addressId)
+      addressId: parseInt(this.$route.query.addressId)
     };
   },
   watch: {
     checkedFlag(flag) {
       this.isDefault = flag;
     }
+  },
+  computed: {
+    ...mapGetters(["userInfo"])
   },
   components: {
     headerBack
@@ -87,46 +90,66 @@ export default {
     toggleSelectDefault() {
       this.checkedFlag = !this.checkedFlag;
     },
-    async _findAddress() {
-      const {
-        status,
-        data: { username, city, streetName, postcode, tel, isDefault, code }
-      } = await findAddress(this.addressId);
-      if (status === 200) {
-        if (code === 0) {
-          this.username = username;
-          this.city = city;
-          this.streetName = streetName;
-          this.postcode = postcode;
-          this.tel = tel;
-          this.isDefault = isDefault;
-        }
+    //这是一种从后台找到地址的方法
+    // async _findAddress() {
+    //   const {
+    //     status,
+    //     data: { username, city, streetName, postcode, tel, isDefault, code }
+    //   } = await findAddress(this.addressId);
+    //   if (status === 200) {
+    //     if (code === 0) {
+    //       this.username = username;
+    //       this.city = city;
+    //       this.streetName = streetName;
+    //       this.postcode = postcode;
+    //       this.tel = tel;
+    //       this.isDefault = isDefault;
+    //     }
+    //   }
+    // },
+
+    //第二种findAddress方法
+    _findAddress() {
+      if (this.userInfo.addressList && this.userInfo.addressList.length) {
+        this.userInfo.addressList.forEach(item => {
+          if (item.addressId === this.addressId) {
+            this.username = item.username;
+            this.city = item.city;
+            this.streetName = item.streetName;
+            this.postcode = item.postcode;
+            this.tel = item.tel;
+            this.isDefault = item.isDefault;
+          }
+        });
       }
     },
-    async saveAddress(){
-      const {status,data:{code,msg}} = await editAddress({
-        username:this.username,
-        city:this.city,
-        addressId:this.addressId,
-        postcode:this.postcode,
-        tel:this.tel,
-        isDefault:this.isDefault,
-        streetName:this.streetName
-      })
-      if(status ===200){
-        if(code ===0){
+    async saveAddress() {
+      const {
+        status,
+        data: { code, msg }
+      } = await editAddress({
+        username: this.username,
+        city: this.city,
+        addressId: this.addressId,
+        postcode: this.postcode,
+        tel: this.tel,
+        isDefault: this.isDefault,
+        streetName: this.streetName
+      });
+      if (status === 200) {
+        if (code === 0) {
           this.setUserStatus(false);
           this.$nextTick(() => {
             this.setUserStatus(true);
           });
           this.setTip(msg);
-          this.$router.back()
-        }else{
-          this.setTip(msg)
+          this.$router.back();
+        } else {
+          this.setTip(msg);
         }
       }
     },
-      ...mapMutations({
+    ...mapMutations({
       setTip: "SET_TIP",
       setUserStatus: "SET_USER_STATUS"
     })
