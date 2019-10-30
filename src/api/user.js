@@ -28,7 +28,7 @@ export const checkPwdAnswer = (username, pwdAnswer) => axios.post('/users/checkP
 })
 
 //修改密码
-export const updatePassword = ({username, pwdAnswer, password}) => axios.post('/users/updatePassword',{
+export const updatePassword = ({ username, pwdAnswer, password }) => axios.post('/users/updatePassword', {
   username,
   pwdAnswer,
   password
@@ -36,3 +36,25 @@ export const updatePassword = ({username, pwdAnswer, password}) => axios.post('/
 
 //登录
 export const logout = () => axios.get('/users/logout')
+
+//添加地址
+export const addAddress = ({ username, city, streetName, postcode, tel, isDefault }) => axios.post('/users/addAddress', {
+  username, city, streetName, postcode, tel, isDefault
+})
+
+// //我的地址
+// export const myAddress = () =>axios.get('/users/myAddress')
+
+//删除地址
+export const deleteAddress = (addressId) => axios.post('/users/deleteAddress', {
+  addressId
+})
+
+//查找地址
+export const findAddress = (addressId) => axios.post('/users/findAddress', {
+  addressId
+})
+
+// 编辑地址
+export const editAddress = ({ addressId, username, city, streetName, postcode, tel, isDefault }) => axios.post('/users/editAddress',
+  { addressId, username, city, streetName, postcode, tel, isDefault })

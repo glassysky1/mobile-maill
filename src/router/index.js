@@ -7,6 +7,8 @@ import Login from 'components/login/login';
 import Register from 'components/register/register';
 import NewPassword from 'components/new-password/new-password';
 import MyAddress from "components/my-address/my-address";
+import AddAddress from "components/add-address/add-address";
+import EditAddress from "components/edit-address/edit-address";
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,7 +42,17 @@ const routes = [
   },
   {
     path:'/myaddress',
-    component:MyAddress
+    component:MyAddress,
+    children:[
+      {
+        path:'addaddress',
+        component: AddAddress
+      },
+      {
+        path:'editaddress',
+        component:EditAddress
+      }
+    ]
   }
 ]
 

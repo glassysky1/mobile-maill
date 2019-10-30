@@ -1,9 +1,15 @@
 const mongoose = require('mongoose')
 
 let usersSchema = new mongoose.Schema({
+  uid: {
+    type: Number,
+  },
   username: {
     type: String,
     unique: true,
+  },
+  createTime: {
+    type: Number,
   },
   password: {
     type: String,
@@ -20,7 +26,7 @@ let usersSchema = new mongoose.Schema({
   addressList: [
     {
       addressId: {
-        type: Number
+        type: Number,
       },
       username: {
         type: String
@@ -31,7 +37,7 @@ let usersSchema = new mongoose.Schema({
       streetName: {
         type: String
       },
-      postCode: {
+      postcode: {
         type: Number
       },
       tel: {
@@ -82,11 +88,11 @@ let usersSchema = new mongoose.Schema({
   //     }
   //   }
   // ],
-  cartList:{
-    type:Array
+  cartList: {
+    type: Array
   },
-  orderList:{//订单列表 
-    type:Array
+  orderList: {//订单列表 
+    type: Array
   }
 })
 
