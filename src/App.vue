@@ -44,12 +44,9 @@ export default {
       } = await getUser();
       if (status === 200) {
         if (code === 0) {
-          console.log(msg);
-          console.log(userInfo);
           this.setUserInfo(userInfo);
           this.setUserStatus(true);
         } else {
-          console.log(msg);
           console.log(userInfo);
           this.setUserInfo(userInfo);
           this.setUserStatus(false);

@@ -1,11 +1,14 @@
 const mongoose = require('mongoose')
 
 let goodsSchema = new mongoose.Schema({
-  id: {
+  proId: {
     type: Number
   },
   title: {
     type: String
+  },
+  minTitle:{
+    type:String
   },
   subtitle: {
     type: String
@@ -21,10 +24,10 @@ let goodsSchema = new mongoose.Schema({
   },
   type: [
     {
-      id: {
+      typeId: {
         type: Number
       },
-      title: {
+      typeTitle: {
         type: String
       },
       nowPrice: {
@@ -35,19 +38,19 @@ let goodsSchema = new mongoose.Schema({
       },
       color: [
         {
-          id: {
+          colorId: {
             type: Number
           },
-          title: {
+          colorTitle: {
             type: String
           },
-          subtitle: {
+          colorSubtitle: {
             type: String
           },
           count: {
             type: Number
           },
-          checked: {
+          status: {
             type: Number
           },
           number: {
@@ -56,7 +59,10 @@ let goodsSchema = new mongoose.Schema({
         }
       ]
     }
-  ]
+  ],
+  classify:{
+    type:String
+  }
 })
 
 module.exports = mongoose.model("Goods",goodsSchema)

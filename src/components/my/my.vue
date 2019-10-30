@@ -41,12 +41,12 @@
       </div>
     </div>
     <div class="my-service">
-      <router-link class="my-address" tag="div" to="myaddress" >
+      <div class="my-address" @click="toMyAddress" >
         <span class="icon">
           <i class="iconfont icon-dizhi"></i>
         </span>
         <span class="text">我的收货地址</span>
-      </router-link>
+      </div>
     </div>
     <div class="logout-btn" v-show="userStatus" @click="logout">
       <span class="text">退出登录</span>
@@ -68,6 +68,15 @@ export default {
     ...mapGetters(["userInfo",'userStatus'])
   },
   methods: {
+    toMyAddress(){
+      if(!this.userInfo.uid){
+        let msg = '未登录'
+        this.setTip(msg)
+        this.$router.push('/login')
+      }else{
+        this.$router.push('/myaddress')
+      }
+    },
     logout() {
       this.$refs.confirm.show()
     },

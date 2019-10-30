@@ -46,6 +46,7 @@ export default {
     },
     selectNavItem(index) {
       this.navItemIndex = index
+      
     }
   }
 };
