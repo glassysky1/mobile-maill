@@ -88,7 +88,7 @@ export default {
     },
     ...mapMutations({
       setTip: "SET_TIP",
-      setUserStatus: "SET_USER_STATUS"
+      setUserStatus: "SET_USER_STATUS",
     })
   },
   created() {}

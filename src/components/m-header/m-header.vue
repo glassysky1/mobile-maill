@@ -21,11 +21,11 @@
         <li
           class="item"
           :class="{'active':index ===navItemIndex}"
-          @click="selectNavItem(index)"
+          @click="selectNavItem(item.path,index)"
           v-for="(item,index) in list"
           :key="index"
         >
-          <span>{{ item }}</span>
+          <span>{{ item.name }}</span>
         </li>
       </ul>
     </div>
@@ -36,17 +36,34 @@
 export default {
   data() {
     return {
-      list: ["推荐", "手机", "电视", "笔记本"],
-      navItemIndex:0
+      list: [
+        {
+          name: "推荐",
+          path: "recommend"
+        },
+        {
+          name: "手机",
+          path: "phone"
+        },
+        {
+          name: "电视",
+          path: "tv"
+        },
+        {
+          name: "笔记本",
+          path: "computer"
+        }
+      ],
+      navItemIndex: 0
     };
   },
   methods: {
     search() {
       console.log(1);
     },
-    selectNavItem(index) {
-      this.navItemIndex = index
-      
+    selectNavItem(path,index) {
+      this.navItemIndex = index;
+      this.$router.replace(path)
     }
   }
 };

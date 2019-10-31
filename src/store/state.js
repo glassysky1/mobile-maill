@@ -1,5 +1,8 @@
 export default{
   userInfo:{},
   tipMsg:'',
-  userStatus:false
+  userStatus:false,
+  goods:[],
+  proId:'',//产品id
+  product:{},
 }

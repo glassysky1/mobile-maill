@@ -9,7 +9,7 @@
             type="text"
             class="box"
             required
-            v-model="username"
+            v-model="addressItem.username "
             maxlength="6"
             placeholder="真实姓名"
           />
@@ -18,19 +18,32 @@
       <div class="item">
         <span class="left">手机号码:</span>
         <span class="input">
-          <input type="number" maxlength="11" required class="box" v-model="tel" placeholder="手机号" />
+          <input
+            type="number"
+            maxlength="11"
+            required
+            class="box"
+            v-model="addressItem.tel"
+            placeholder="手机号"
+          />
         </span>
       </div>
       <div class="item">
         <span class="left">所在城市:</span>
         <span class="input">
-          <input type="text" class="box" required v-model="city" placeholder="所在城市" />
+          <input type="text" class="box" required v-model="addressItem.city" placeholder="所在城市" />
         </span>
       </div>
       <div class="item">
         <span class="left">所在街道:</span>
         <span class="input">
-          <input type="text" class="box" required v-model="streetName" placeholder="所在街道" />
+          <input
+            type="text"
+            class="box"
+            required
+            v-model="addressItem.streetName"
+            placeholder="所在街道"
+          />
         </span>
       </div>
       <div class="item">
@@ -41,14 +54,19 @@
             maxlength="6"
             required
             class="box"
-            v-model="postcode"
+            v-model="addressItem.postcode"
             placeholder="所在街道"
           />
         </span>
       </div>
       <div class="item">
         <span class="left">设置为默认地址</span>
-        <input class="checkbox" type="checkbox" :checked="isDefault" @click="toggleSelectDefault" />
+        <input
+          class="checkbox"
+          type="checkbox"
+          :checked="addressItem.isDefault"
+          @click="toggleSelectDefault"
+        />
       </div>
     </div>
     <button type="submit" class="new">
@@ -66,22 +84,17 @@ export default {
     return {
       searchFlag: false,
       checkedFlag: false,
-      username: "",
-      tel: "",
-      city: "",
-      streetName: "",
-      postcode: "",
-      isDefault: false,
       addressId: parseInt(this.$route.query.addressId)
     };
   },
   watch: {
     checkedFlag(flag) {
-      this.isDefault = flag;
+      this.addressItem.isDefault = flag;
     }
   },
   computed: {
-    ...mapGetters(["userInfo"])
+    // ...mapGetters(["userInfo"])
+    ...mapGetters(["addressItem"]) //第三种回显地址的方法
   },
   components: {
     headerBack
@@ -109,32 +122,32 @@ export default {
     // },
 
     //第二种findAddress方法
-    _findAddress() {
-      if (this.userInfo.addressList && this.userInfo.addressList.length) {
-        this.userInfo.addressList.forEach(item => {
-          if (item.addressId === this.addressId) {
-            this.username = item.username;
-            this.city = item.city;
-            this.streetName = item.streetName;
-            this.postcode = item.postcode;
-            this.tel = item.tel;
-            this.isDefault = item.isDefault;
-          }
-        });
-      }
-    },
+    // _findAddress() {
+    //   if (this.userInfo.addressList && this.userInfo.addressList.length) {
+    //     this.userInfo.addressList.forEach(item => {
+    //       if (item.addressId === this.addressId) {
+    //         this.username = item.username;
+    //         this.city = item.city;
+    //         this.streetName = item.streetName;
+    //         this.postcode = item.postcode;
+    //         this.tel = item.tel;
+    //         this.isDefault = item.isDefault;
+    //       }
+    //     });
+    //   }
+    // },
     async saveAddress() {
       const {
         status,
         data: { code, msg }
       } = await editAddress({
-        username: this.username,
-        city: this.city,
+        username: this.addressItem.username,
+        city: this.addressItem.city,
         addressId: this.addressId,
-        postcode: this.postcode,
-        tel: this.tel,
-        isDefault: this.isDefault,
-        streetName: this.streetName
+        postcode: this.addressItem.postcode,
+        tel: this.addressItem.tel,
+        isDefault: this.addressItem.isDefault,
+        streetName: this.addressItem.streetName
       });
       if (status === 200) {
         if (code === 0) {
@@ -151,11 +164,13 @@ export default {
     },
     ...mapMutations({
       setTip: "SET_TIP",
-      setUserStatus: "SET_USER_STATUS"
+      setUserStatus: "SET_USER_STATUS",
+      setAdressId: "SET_ADDRESS_ID"
     })
   },
   mounted() {
-    this._findAddress();
+    // this._findAddress();
+    this.setAdressId(this.addressId);
   }
 };
 </script>

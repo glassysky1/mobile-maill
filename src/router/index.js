@@ -13,68 +13,78 @@ import Recommend from "components/recommend/recommend";
 import Phone from "components/phone/phone";
 import TV from "components/tv/tv";
 import Computer from "components/computer/computer";
-
+import ProductDetail from "base/product-detail/product-detail";
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect:'/home'
+    redirect: '/home'
   },
   {
-    path:'/home',
-    component:Home,
-    redirect:'/recommend',
-    children:[
+    path: '/home',
+    component: Home,
+
+    children: [
       {
-        path:'/recommend',
-        component:Recommend
+        path: 'recommend',
+        component: Recommend,
+        children: [
+          {
+            path:'productdetail',
+            component: ProductDetail
+          }
+        ]
       },
       {
-        path:'/tv',
-        component:TV
+        path: 'tv',
+        component: TV
       },
       {
-        path:'/phone',
+        path: 'phone',
         component: Phone
       },
       {
-        path:'/computer',
+        path: 'computer',
         component: Computer
       },
+      {
+        path: '',
+        redirect: 'recommend'
+      }
     ]
   },
   {
-    path:'/cart',
-    component:Cart
+    path: '/cart',
+    component: Cart
   },
   {
-    path:'/my',
-    component:My
+    path: '/my',
+    component: My
   },
   {
-    path:'/login',
-    component:Login
+    path: '/login',
+    component: Login
   },
   {
-    path:'/register',
-    component:Register
+    path: '/register',
+    component: Register
   },
   {
-    path:'/newpassword',
+    path: '/newpassword',
     component: NewPassword
   },
   {
-    path:'/myaddress',
-    component:MyAddress,
-    children:[
+    path: '/myaddress',
+    component: MyAddress,
+    children: [
       {
-        path:'addaddress',
+        path: 'addaddress',
         component: AddAddress
       },
       {
-        path:'editaddress',
-        component:EditAddress
+        path: 'editaddress',
+        component: EditAddress
       }
     ]
   }
