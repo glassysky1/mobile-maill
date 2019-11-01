@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const Users = require('../dbs/models/users')
+const Goods = require('../dbs/models/goods')
 router.prefix('/users')
 
 router.post('/register', async (ctx, next) => {
@@ -347,7 +348,7 @@ router.post('/editAddress', async (ctx) => {
     if (isDefault === true) {
       //如果传参过来的设置为true，则把其他的改成false
       //把要修改的列表删除
-      OldAddressList.splice(currentIndex,1)
+      OldAddressList.splice(currentIndex, 1)
       OldAddressList.forEach((item) => {
         addressList.push({
           addressId: item.addressId,
@@ -396,4 +397,93 @@ router.post('/editAddress', async (ctx) => {
   }
 })
 
+
+//加入购物车
+router.post('/addToCart', async (ctx) => {
+  const { proId, typeId, colorId } = ctx.request.body
+  const product = await Goods.findOne({
+    proId
+  })
+  //找到产品的型号
+  //typeIndex
+  if (product.typeList) {
+    let typeIndex = 0
+    let typeList = product.typeList
+    typeList.forEach((type, index) => {
+      if (type.typeId === typeId) {
+        typeIndex = index
+      }
+    })
+    //找到型号
+    let type = typeList[typeIndex]
+
+    if (type.colorList) {
+      let colorList = type.colorList
+
+      let colorIndex = 0
+
+      colorList.forEach((color, index) => {
+        if (color.colorId === colorId) {
+          colorIndex = index
+        }
+      })
+
+      let color = colorList[colorIndex]
+
+      //到手了，product ，type，color
+      //开始组装
+      let coverImg = product.coverImg
+      let colorSubtitle = color.colorSubtitle
+      let colorCount = color.count
+      let nowPrice = type.nowPrice
+      const uid = ctx.cookies.get('uid')
+      const user = await Users.findOne({
+        uid
+      })
+      if (uid) {
+        let count = 1
+        let cart = {
+          proId,
+          typeId,
+          colorId,
+          count,
+          coverImg,
+          colorSubtitle,
+          nowPrice
+        }
+
+        let cartList = user.cartList
+        //如果添加的是同一个型号同一个颜色，则count++
+        let flag = false
+        let currentIndex = 0
+        cartList.forEach((item, index) => {
+          if (item.colorId === cart.colorId) {
+            flag = true
+            currentIndex = index
+          }
+        })
+
+        if (flag) {
+          cartList[currentIndex].count++
+        } else {
+          //否则则添加在头部
+          cartList.unshift(cart)
+
+        }
+
+        await Users.findOne({
+          uid
+        }).update({
+          cartList
+        })
+
+        ctx.body = {
+          code: 0,
+          cartList: user.cartList
+        }
+      }
+    }
+
+  }
+})
 module.exports = router

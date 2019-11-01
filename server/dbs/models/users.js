@@ -48,49 +48,31 @@ let usersSchema = new mongoose.Schema({
       }
     }
   ],
-  // cartList: [//购物车列表
-  //   {
-  //     id: {
-  //       type: Number
-  //     },
-  //     title: {
-  //       type: String
-  //     },
-  //     coverImg:{
-  //       type:String
-  //     },
-  //     type: {
-  //       id: {
-  //         type: Number
-  //       },
-  //       title: {
-  //         type: String
-  //       },
-  //       nowPrice: {
-  //         type: Number
-  //       },
-  //       color: [
-  //         {
-  //           id: {
-  //             type: Number
-  //           },
-  //           title: {
-  //             type: Number
-  //           },
-  //           checked: {
-  //             type: Number
-  //           },
-  //           number: {
-  //             type: Number
-  //           }
-  //         }
-  //       ]
-  //     }
-  //   }
-  // ],
-  cartList: {
-    type: Array
-  },
+  cartList: [
+    {
+      proId:{
+        type:Number
+      },
+      typeId:{
+        type:Number
+      },
+      colorId:{
+        type:Number
+      },
+      count:{
+        type:Number
+      },
+      coverImg:{
+        type:String
+      },
+      colorSubtitle:{
+        type:String
+      },
+      nowPrice:{
+        type:Number
+      }
+    }
+  ],
   orderList: {//订单列表 
     type: Array
   }

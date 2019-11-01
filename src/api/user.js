@@ -58,3 +58,8 @@ export const findAddress = (addressId) => axios.post('/users/findAddress', {
 // 编辑地址
 export const editAddress = ({ addressId, username, city, streetName, postcode, tel, isDefault }) => axios.post('/users/editAddress',
   { addressId, username, city, streetName, postcode, tel, isDefault })
+
+//加入购物车
+export const addToCart = ({ proId, typeId, colorId }) => axios.post('/users/addToCart',
+  { proId, typeId, colorId }
+)

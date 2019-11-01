@@ -102,7 +102,7 @@
         </span>
       </div>
       <div class="right">
-        <div class="addCart">
+        <div class="addCart" @click="addToCart">
           <span class="text">加入购物车</span>
         </div>
       </div>
@@ -116,6 +116,7 @@ import "swiper/dist/css/swiper.css";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { getProduct } from "api/goods";
+import { addToCart } from "api/user";
 export default {
   data() {
     return {
@@ -205,11 +206,16 @@ export default {
           this.colorIndex
         ];
         this.color = color;
-        if(this.color.count===0){
-          //如果此颜色的手机数量为0，则this.colorIndex-1
-          this.colorIndex = this.colorIndex -1
+        if (this.color.count === 0) {
+          //如果此颜色的手机数量为0
+          //若this.colorIndex=0 则this.colorIndex+1,否则-1
+          if (this.colorIndex === 0) {
+            this.colorIndex = this.colorIndex + 1;
+          } else {
+            this.colorIndex = this.colorIndex - 1;
+          }
           //重新调用，加载型号颜色
-          this._loadTypeAndColor()
+          this._loadTypeAndColor();
         }
         this.typeId = type.typeId;
         this.colorId = color.colorId;
@@ -217,12 +223,30 @@ export default {
       }
     },
     //加入购物车
-    addToCart(){
+    async addToCart() {
+      this.showFlag = false
       this._loadTypeAndColor();
       //三个关键参数加入购物车
-      console.log(this.proId,this.typeId,this.colorId);
-      
-    }
+      console.log(this.proId, this.typeId, this.colorId);
+      const { proId, typeId, colorId } = this;
+      const {
+        status,
+        data: { code, cartList }
+      } = await addToCart({
+        proId,
+        typeId,
+        colorId
+      });
+      if (status === 200) {
+        console.log(cartList);
+
+        let msg = "加入购物车成功";
+        this.setTip(msg);
+      }
+    },
+    ...mapMutations({
+      setTip: "SET_TIP"
+    })
   },
   mounted() {
     this._loadTypeAndColor();
