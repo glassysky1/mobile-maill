@@ -1,8 +1,8 @@
 <template>
   <div class="product-detail" v-if="product">
     <div class="swiper">
-      <swiper :options="swiperOption">
-        <swiper-slide v-for="(item, index)  in product.bannerImg" :key="index">
+      <swiper :options="swiperOption" v-if="product.bannerList">
+        <swiper-slide v-for="(item, index)  in product.bannerList" :key="index">
           <img class="img" :src="item" />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -22,17 +22,17 @@
         <span class="left">已选</span>
         <span
           class="center"
-        >{{typeList[0].colorList[0].colorSubtitle}} {{typeList[0].colorList[0].colorTtitle}} x 1</span>
+        >{{typeList[typeIndex].colorList[colorIndex].colorSubtitle}} {{typeList[typeIndex].colorList[colorIndex].colorTtitle}} x 1</span>
         <span class="right">
           <i class="iconfont icon-arrow-sl"></i>
         </span>
       </div>
     </div>
     <transition name="slide-select">
-      <div class="select-detail" v-show="showFlag=true">
-        <div class="bg-layer" @click="showFlag=false"></div>
+      <div class="select-detail" v-show="showFlag">
+        <div class="bg-layer" @click="closeOption"></div>
         <div class="content">
-          <span class="close" @click="showFlag=false">
+          <span class="close" @click="closeOption">
             <i class="iconfont icon-cha1"></i>
           </span>
           <div class="title">
@@ -41,14 +41,14 @@
             </div>
             <div class="right">
               <div class="price" v-if="typeList.length">
-                <span class="nowPrice">￥{{typeList[0].nowPrice}}</span>
+                <span class="nowPrice">￥{{typeList[typeIndex].nowPrice}}</span>
                 <span
                   class="oldPrice"
-                  v-show="typeList[0].oldPrice !=-1"
-                >￥{{typeList[0].oldPrice}}</span>
+                  v-show="typeList[typeIndex].oldPrice !=-1"
+                >￥{{typeList[typeIndex].oldPrice}}</span>
               </div>
-              <div class="detail">
-                <span class="text">Redmi K20 6GB+128GB 火焰红</span>
+              <div class="detail" v-if="typeList.length">
+                <span class="text">{{typeList[typeIndex].colorList[colorIndex].colorSubtitle}}</span>
               </div>
             </div>
           </div>
@@ -57,19 +57,31 @@
             <div class="item">
               <div v-for="(type,index) in typeList" :key="index" class="type">
                 <!-- active -->
-                <span class="text" :class="{'active': typeIndex === index}" @click="selectType(type,index)">{{type.typeTitle}}</span>
+                <span
+                  class="text"
+                  :class="{'active': typeIndex === index}"
+                  @click="selectType(type,index)"
+                >{{type.typeTitle}}</span>
                 <div class="color-type">
                   <h3 class="color-name">颜色</h3>
                   <!-- active -->
                   <!-- 这一段很难很难，typeList进行遍历，然后再把colorList进行遍历，所以color在页面上有重叠的现象，根据typeList的typeIndex找到type与当前type进行匹配,如果匹配成功，则显示当前type下的colorList -->
-                  <div class="color" v-show="type.typeId === typeList[typeIndex].typeId"  :class="{'active': colorIndex === index}" @click="selectColor(color,index)" v-for="(color,index) in type.colorList" :key="index">
+                  <!-- 如果没货的话就不显示颜色 -->
+                  <div
+                    class="color"
+                    v-show="type.typeId === typeList[typeIndex].typeId && color.count"
+                    :class="{'active': colorIndex === index}"
+                    @click="selectColor(color,index)"
+                    v-for="(color,index) in type.colorList"
+                    :key="index"
+                  >
                     <span class="color-item">{{color.colorTitle}}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="add-cart">
+          <div class="add-cart" @click="addToCart">
             <span class="text">加入购物车</span>
           </div>
         </div>
@@ -122,9 +134,22 @@ export default {
       proId: parseInt(this.$route.query.proId),
       typeList: [],
       product: {},
-      typeIndex:0,
-      colorIndex:0,
+      typeIndex: 0,
+      colorIndex: 0,
+      typeId: 0,
+      colorId: 0,
+      color: {}
     };
+  },
+  watch: {
+    //监视选择的类型切换，如果color.count ===0,则colorIndex--保证，颜色选择
+    // typeId() {
+    //   console.log(this.color.count);
+    //   while (this.color.count === 0) {
+    //     this.colorIndex--;
+    //     console.log(1);
+    //   }
+    // }
   },
   components: {
     swiper,
@@ -132,15 +157,22 @@ export default {
   },
   methods: {
     //选择类型
-    selectType(type,index){
-        console.log(type.typeId,index);
-        this.typeIndex = index
-        
+    selectType(type, index) {
+      // console.log(type.typeId, index);
+      //判断如果发现手机颜色数量为0
+      //则colorindex--
+
+      this.typeIndex = index;
+      this.typeId = type.typeId;
+      this._loadTypeAndColor();
     },
     //选择颜色
-    selectColor(color,index){
-      console.log(color.colorId,index);
-        this.colorIndex = index 
+    selectColor(color, index) {
+      // console.log(color.colorId, index);
+      this.colorIndex = index;
+
+      this.colorId = color.colorId;
+      this._loadTypeAndColor();
     },
     async _getProduct() {
       const {
@@ -152,13 +184,48 @@ export default {
         if (code === 0) {
           this.typeList = typeList;
           this.product = product;
+          this._loadTypeAndColor();
         }
       }
     },
-  
+    closeOption() {
+      this.showFlag = false;
+      //关闭时，加载选中的型号和颜色
+      this._loadTypeAndColor();
+    },
+    openOption() {
+      this.showFlag = true;
+    },
+    //加载型号和颜色,真他妈难
+    _loadTypeAndColor() {
+      //默认加载第一个型号，一种颜色
+      if (this.product.typeList) {
+        let type = this.product.typeList[this.typeIndex];
+        let color = this.product.typeList[this.typeIndex].colorList[
+          this.colorIndex
+        ];
+        this.color = color;
+        if(this.color.count===0){
+          //如果此颜色的手机数量为0，则this.colorIndex-1
+          this.colorIndex = this.colorIndex -1
+          //重新调用，加载型号颜色
+          this._loadTypeAndColor()
+        }
+        this.typeId = type.typeId;
+        this.colorId = color.colorId;
+        console.log(this.typeId, this.colorId);
+      }
+    },
+    //加入购物车
+    addToCart(){
+      this._loadTypeAndColor();
+      //三个关键参数加入购物车
+      console.log(this.proId,this.typeId,this.colorId);
+      
+    }
   },
-  mounted(){
-
+  mounted() {
+    this._loadTypeAndColor();
   },
   created() {
     this._getProduct();
@@ -378,6 +445,9 @@ export default {
                 &.active
                   color #ff5600
                   border 1px dotted #ff5600
+                &.disable
+                  color rgba(0, 0, 0, 0.3)
+                  border 1px solid #cccccc
       .add-cart
         position absolute
         width 90%
