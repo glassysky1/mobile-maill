@@ -16,13 +16,13 @@ let goodsSchema = new mongoose.Schema({
   coverImg: {
     type: String
   },
-  bannerImg: {
+  bannerList: {
     type: Array
   },
   detailImg: {
     type: String
   },
-  type: [
+  typeList: [
     {
       typeId: {
         type: Number
@@ -36,7 +36,7 @@ let goodsSchema = new mongoose.Schema({
       oldPrice: {
         type: Number
       },
-      color: [
+      colorList: [
         {
           colorId: {
             type: Number

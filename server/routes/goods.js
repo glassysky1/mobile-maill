@@ -18,18 +18,18 @@ router.post('/getProduct', async (ctx) => {
     proId
   }
   )
-  let productType = product.type
+  let typeList = product.typeList
   if (product) {
     ctx.body = {
       code: 0,
       product,
-      productType
+      typeList
     }
   } else {
     ctx.body = {
       code: -1,
       product:{},
-      productType:[]
+      typeList:[]
     }
   }
 })

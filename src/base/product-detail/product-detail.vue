@@ -14,15 +14,15 @@
     <div class="content">
       <h1 class="title">{{product.title}}</h1>
       <p class="subtitle">{{product.subtitle}}</p>
-      <p class="price" v-if="productType.length">
-        <span class="nowPrice">￥{{productType[0].nowPrice}}</span>
-        <span class="oldPrice" v-show="productType[0].oldPrice !=-1">￥{{productType[0].oldPrice}}</span>
+      <p class="price" v-if="typeList.length">
+        <span class="nowPrice">￥{{typeList[0].nowPrice}}</span>
+        <span class="oldPrice" v-show="typeList[0].oldPrice !=-1">￥{{typeList[0].oldPrice}}</span>
       </p>
-      <div class="select" v-if="productType.length" @click="showFlag=true">
+      <div class="select" v-if="typeList.length" @click="showFlag=true">
         <span class="left">已选</span>
         <span
           class="center"
-        >{{productType[0].color[0].colorSubtitle}} {{productType[0].color[0].colorTtitle}} x 1</span>
+        >{{typeList[0].colorList[0].colorSubtitle}} {{typeList[0].colorList[0].colorTtitle}} x 1</span>
         <span class="right">
           <i class="iconfont icon-arrow-sl"></i>
         </span>
@@ -40,12 +40,12 @@
               <img width="104" :src="product.coverImg" alt class="image" />
             </div>
             <div class="right">
-              <div class="price" v-if="productType.length">
-                <span class="nowPrice">￥{{productType[0].nowPrice}}</span>
+              <div class="price" v-if="typeList.length">
+                <span class="nowPrice">￥{{typeList[0].nowPrice}}</span>
                 <span
                   class="oldPrice"
-                  v-show="productType[0].oldPrice !=-1"
-                >￥{{productType[0].oldPrice}}</span>
+                  v-show="typeList[0].oldPrice !=-1"
+                >￥{{typeList[0].oldPrice}}</span>
               </div>
               <div class="detail">
                 <span class="text">Redmi K20 6GB+128GB 火焰红</span>
@@ -53,17 +53,20 @@
             </div>
           </div>
           <div class="option">
-            <div class="option-item">
-              <h3 class="name">版本</h3>
-              <p>
-                <span class="text">6GB+128GB</span>
-              </p>
-            </div>
-            <div class="option-item">
-              <h3 class="name">颜色</h3>
-              <p>
-                <span class="text">探险黑</span>
-              </p>
+            <h3 class="name">版本</h3>
+            <div class="item">
+              <div v-for="(type,index) in typeList" :key="index" class="type">
+                <!-- active -->
+                <span class="text" :class="{'active': typeIndex === index}" @click="selectType(type,index)">{{type.typeTitle}}</span>
+                <div class="color-type">
+                  <h3 class="color-name">颜色</h3>
+                  <!-- active -->
+                  <!-- 这一段很难很难，typeList进行遍历，然后再把colorList进行遍历，所以color在页面上有重叠的现象，根据typeList的typeIndex找到type与当前type进行匹配,如果匹配成功，则显示当前type下的colorList -->
+                  <div class="color" v-show="type.typeId === typeList[typeIndex].typeId"  :class="{'active': colorIndex === index}" @click="selectColor(color,index)" v-for="(color,index) in type.colorList" :key="index">
+                    <span class="color-item">{{color.colorTitle}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="add-cart">
@@ -117,31 +120,45 @@ export default {
         }
       },
       proId: parseInt(this.$route.query.proId),
-      productType: [],
-      product: {}
+      typeList: [],
+      product: {},
+      typeIndex:0,
+      colorIndex:0,
     };
-  },
-  computed: {
-    // ...mapGetters(["product"])
   },
   components: {
     swiper,
     swiperSlide
   },
   methods: {
+    //选择类型
+    selectType(type,index){
+        console.log(type.typeId,index);
+        this.typeIndex = index
+        
+    },
+    //选择颜色
+    selectColor(color,index){
+      console.log(color.colorId,index);
+        this.colorIndex = index 
+    },
     async _getProduct() {
       const {
         status,
-        data: { code, productType, product }
+        data: { code, typeList, product }
       } = await getProduct(this.proId);
       console.log(status);
       if (status === 200) {
         if (code === 0) {
-          this.productType = productType;
+          this.typeList = typeList;
           this.product = product;
         }
       }
-    }
+    },
+  
+  },
+  mounted(){
+
   },
   created() {
     this._getProduct();
@@ -325,21 +342,42 @@ export default {
             overflow hidden
       .option
         margin 30px 3% 0 3%
-        .option-item
-          .name
-            line-height 20px
-            font-size 13px
-            color rgba(0,0,0,.87)
-          p
-            margin 30px 0 30px 10px
+        .name
+          line-height 20px
+          font-size 13px
+          color rgba(0, 0, 0, 0.87)
+        .item
+          position relative
+          margin 30px 0 30px 10px
+          .type
+            display inline-block
             .text
+              margin-right 10px
               font-size 12px
               padding 10px 4px
-              color rgba(0,0,0,.87)
+              color rgba(0, 0, 0, 0.87)
               border 1px solid #cccccc
-              .active
+              &.active
                 color #ff5600
                 border 1px solid #ff5600
+            .color-type
+              position absolute
+              left -10px
+              top 60px
+              font-size 13px
+              color rgba(0, 0, 0, 0.87)
+              .color-name
+                margin-bottom 20px
+              .color
+                display inline-block
+                margin-left 12px
+                font-size 12px
+                padding 10px 4px
+                margin-right 10px
+                border 1px solid #cccccc
+                &.active
+                  color #ff5600
+                  border 1px dotted #ff5600
       .add-cart
         position absolute
         width 90%
@@ -347,8 +385,9 @@ export default {
         bottom 1%
         background-color #ff6700
         text-align center
+        padding 10px 0
+        border-radius 20px
         .text
           font-size 18px
           color #ffffff
-          padding 10px 0
 </style>
