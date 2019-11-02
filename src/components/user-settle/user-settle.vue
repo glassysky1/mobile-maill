@@ -223,6 +223,8 @@ export default {
       .desc
         font-size 12.5px
         color #3c3c3c
+        flex 1
+        padding-right 25px
         .title
           margin-bottom 5px
         .price
