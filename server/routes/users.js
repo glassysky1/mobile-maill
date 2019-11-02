@@ -184,6 +184,22 @@ router.get('/logout', async (ctx) => {
   }
 })
 
+//地址列表
+router.get('/addressList',async (ctx) =>{
+  const  uid = ctx.cookies.get('uid')
+  if(uid){
+    const user = await Users.findOne({
+      uid
+    })
+    
+    const  addressList = user.addressList
+    ctx.body={
+      code:0,
+      addressList
+    }
+  }
+})
+
 //增加地址
 router.post('/addAddress', async (ctx) => {
   const { username, city, streetName, postcode, tel, isDefault } = ctx.request.body
@@ -456,7 +472,14 @@ router.post('/addToCart', async (ctx) => {
         //如果添加的是同一个型号同一个颜色，则count++
         let flag = false
         let currentIndex = 0
+        let totalCount = 0//总数量
+        let msg = ''//设置信息
         cartList.forEach((item, index) => {
+
+          if (item.selected) {
+            //如果是选中的话，就加加
+            totalCount += item.count
+          }
           if (item.colorId === cart.colorId) {
             flag = true
             currentIndex = index
@@ -464,11 +487,22 @@ router.post('/addToCart', async (ctx) => {
         })
 
         if (flag) {
-          cartList[currentIndex].count++
+          if (cartList[currentIndex].count < 2) {
+            cartList[currentIndex].count++
+            msg = '加入购物车成功！'
+            totalCount++
+          } else {
+            msg = '同一商品最多只能能购买两件！'
+            ctx.body = {
+              code: -1,
+              msg
+            }
+          }
         } else {
           //否则则添加在头部
           cartList.unshift(cart)
-
+          msg = '加入购物车成功！'
+          totalCount++
         }
 
         await Users.findOne({
@@ -479,10 +513,115 @@ router.post('/addToCart', async (ctx) => {
 
         ctx.body = {
           code: 0,
-          cartList: user.cartList
+          cartList: user.cartList,
+          totalCount,
+          msg
         }
       }
     }
+
+  }
+})
+
+//获取用户购物车
+router.get('/myCart', async (ctx) => {
+  const uid = ctx.cookies.get('uid')
+  if (uid) {
+    const user = await Users.findOne({
+      uid
+    })
+
+    let cartList = user.cartList
+    let totalPrice = 0
+    let totalCount = 0
+    cartList.forEach((item, index) => {
+      //如果是选中的话，数量和价格猜被加进来
+      if (item.selected) {
+        totalCount += item.count
+
+        let number = item.count
+        while (number>0) {
+          totalPrice += item.nowPrice
+          number--
+        }
+      }
+    })
+
+    ctx.body = {
+      code: 0,
+      totalCount,
+      totalPrice,
+      cartList
+    }
+  } else {
+    ctx.body = {
+      code: -1,
+      msg: '未登录'
+    }
+  }
+})
+//选中或取消用户购物车一个元素
+router.post('/myCart/selectItem', async (ctx) => {
+  const { proId, typeId, colorId, selected } = ctx.request.body
+
+  const uid = ctx.cookies.get('uid')
+  if (uid) {
+    const user = await Users.findOne({
+      uid
+    })
+    let cartList = user.cartList
+    let currentIndex = 0
+    cartList.forEach((item, index) => {
+      if (item.proId === proId && item.typeId === typeId
+        && item.colorId === colorId
+      ) {
+        currentIndex = index
+      }
+    })
+    cartList[currentIndex].selected = selected
+    await Users.findOne({
+      uid
+    }).update({
+      cartList
+    })
+    ctx.body = {
+      code: 0,
+      msg: '选择或取消成功'
+    }
+
+  }
+})
+
+//删除用户购物车车一个元素
+router.post('/myCart/deleteItem', async (ctx) => {
+  const { proId, typeId, colorId } = ctx.request.body
+  const uid = ctx.cookies.get('uid')
+  if (uid) {
+    const user = await Users.findOne({
+      uid
+    })
+
+    let cartList = user.cartList
+    let currentIndex = 0
+    cartList.forEach((item, index) => {
+      if (item.proId === proId && item.typeId === typeId
+        && item.colorId === colorId
+      ) {
+        currentIndex = index
+      }
+    })
+    cartList.splice(currentIndex,1)
+
+    await Users.findOne({
+      uid
+    }).update({
+      cartList
+    })
+    ctx.body = {
+      code: 0,
+      msg: '删除成功'
+    }
+
 
   }
 })

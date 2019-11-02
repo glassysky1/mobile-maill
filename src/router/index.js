@@ -9,11 +9,13 @@ import NewPassword from 'components/new-password/new-password';
 import MyAddress from "components/my-address/my-address";
 import AddAddress from "components/add-address/add-address";
 import EditAddress from "components/edit-address/edit-address";
+import SelectAddress from "components/select-address/select-address";
 import Recommend from "components/recommend/recommend";
 import Phone from "components/phone/phone";
 import TV from "components/tv/tv";
 import Computer from "components/computer/computer";
-import ProductDetail from "base/product-detail/product-detail";
+import ProductDetail from "components/product-detail/product-detail";
+import UserSettle from "components/user-settle/user-settle";
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,7 +33,7 @@ const routes = [
         component: Recommend,
         children: [
           {
-            path:'productdetail',
+            path: 'productdetail',
             component: ProductDetail
           }
         ]
@@ -77,17 +79,25 @@ const routes = [
   {
     path: '/myaddress',
     component: MyAddress,
+  },
+  {
+    path: '/myaddress/addaddress',
+    component: AddAddress
+  },
+  {
+    path: '/myaddress/editaddress',
+    component: EditAddress
+  },
+  {
+    path: '/usersettle',
+    component: UserSettle,
     children: [
       {
-        path: 'addaddress',
-        component: AddAddress
-      },
-      {
-        path: 'editaddress',
-        component: EditAddress
+        path: '/selectaddress',
+        component: SelectAddress
       }
     ]
-  }
+  },
 ]
 
 const router = new VueRouter({

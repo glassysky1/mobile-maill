@@ -1,87 +1,48 @@
 <template>
-  <div class="my-address">
-    <header-back title="地址管理" :searchFlag="searchFlag"></header-back>
+  <div class="select-address">
+    <header-back title="收货地址" :searchFlag="searchFlag"></header-back>
     <div class="my-address-wrapper" v-if="userInfo.addressList">
-      <div class="address-item" v-for="(item,index) in userInfo.addressList" :key="index">
+      <div class="address-item" v-for="(item,index) in userInfo.addressList" :key="index" @click="selectAddress(index)">
         <div class="top">
           <span class="name">{{item.username}}</span>
           <span class="tel">
             {{item.tel}}
             <span v-show="item.isDefault" class="default">[默认]</span>
           </span>
-          <span class="del" @click="deleteAddress(item.addressId)">删除</span>
         </div>
-        <div class="bottom" @click="editAddress(item.addressId)">
+        <div class="bottom">
           <p class="address">{{item.city}}</p>
           <p class="detail">{{item.streetName}}</p>
           <i class="iconfont icon-arrow-sl"></i>
         </div>
       </div>
     </div>
-    <div v-if="userInfo.addressList && !userInfo.addressList.length" class="no-result">
-      <span class="text">你还没有添加地址...</span>
-    </div>
     <router-link tag="div" to="/myaddress/addaddress" class="new">
       <span class="text">新建地址</span>
     </router-link>
-    <confirm ref="confirm" @confirm="confirm" text="确定要删除此地址？"></confirm>
   </div>
 </template>
 
 <script>
-import { deleteAddress } from "api/user";
 import headerBack from "base/header-back/header-back";
-import Confirm from "base/confirm/confirm";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
       searchFlag: false,
-      addressId: ""
     };
   },
   components: {
     headerBack,
-    Confirm
   },
   watch: {},
   computed: {
     ...mapGetters(["userInfo"])
   },
   methods: {
-    async confirm() {
-      const {
-        status,
-        data: { code, msg }
-      } = await deleteAddress(this.addressId);
-      if (status === 200) {
-        if (code === 0) {
-          this.setUserStatus(false);
-          this.$nextTick(() => {
-            this.setUserStatus(true);
-          });
-          this.setTip(msg);
-        } else {
-          this.setTip(msg);
-        }
-      }
-    },
-    deleteAddress(addressId) {
-      this.addressId = addressId;
-
-      // if(isDefault){
-      //   //如果是默认地址的话，就不给删
-      //   let msg = "默认地址，无法删除"
-      //   this.setTip(msg)
-      //   return
-      // }
-      this.$refs.confirm.show();
-    },
-    async editAddress(addressId) {
-      this.$router.push({
-        path: `/myaddress/editaddress`,
-        query: { addressId }
-      });
+    selectAddress(index){
+      this.$emit('selectAddress',index)
+      this.$router.back()
     },
     ...mapMutations({
       setTip: "SET_TIP",
@@ -92,7 +53,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.my-address
+.select-address
   position fixed
   top 0
   left 0

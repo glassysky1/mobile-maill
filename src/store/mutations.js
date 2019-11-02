@@ -19,5 +19,8 @@ export default{
   },
   [types.SET_PRODUCT](state,product){
     state.product = product
+  },
+  [types.SET_TOTAL_COUNT_REFRESH](state,totalCountRefreshFlag){
+    state.totalCountRefreshFlag = totalCountRefreshFlag
   }
 }

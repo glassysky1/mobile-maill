@@ -82,7 +82,6 @@ export default {
   },
   computed: {
     // ...mapGetters(["userInfo"])
-    ...mapGetters(["addressItem"]) //第三种回显地址的方法
   },
   components: {
     headerBack

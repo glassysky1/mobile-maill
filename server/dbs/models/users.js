@@ -70,6 +70,10 @@ let usersSchema = new mongoose.Schema({
       },
       nowPrice:{
         type:Number
+      },
+      selected:{
+        type:Boolean,
+        default:true
       }
     }
   ],

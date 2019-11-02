@@ -37,6 +37,8 @@ export const updatePassword = ({ username, pwdAnswer, password }) => axios.post(
 //登录
 export const logout = () => axios.get('/users/logout')
 
+//获取地址列表
+export const AddressList = () => axios.get('/users/addressList')
 //添加地址
 export const addAddress = ({ username, city, streetName, postcode, tel, isDefault }) => axios.post('/users/addAddress', {
   username, city, streetName, postcode, tel, isDefault
@@ -61,5 +63,18 @@ export const editAddress = ({ addressId, username, city, streetName, postcode, t
 
 //加入购物车
 export const addToCart = ({ proId, typeId, colorId }) => axios.post('/users/addToCart',
+  { proId, typeId, colorId }
+)
+
+//获取用户购物车
+export const myCart = () => axios.get('/users/myCart')
+
+//选择或取消购物车元素
+export const myCartSelectItem = ({ proId, typeId, colorId, selected }) => axios.post('/users/myCart/selectItem',
+{ proId, typeId, colorId, selected }
+)
+
+//删除购物车一个元素
+export const myCartDeleteItem = ({ proId, typeId, colorId }) => axios.post('/users/myCart/deleteItem',
   { proId, typeId, colorId }
 )

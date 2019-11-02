@@ -1,6 +1,6 @@
 <template>
   <transition name="bounce">
-    <div class="tip" v-show="showFlag" @click.stop='hide'>
+    <div class="tip"  v-show="showFlag"  @click.stop='hide'>
       <div class="title">{{title}}</div>
       <slot></slot>
     </div>
@@ -46,14 +46,15 @@ export default {
     z-index 999
     left 50%
     transform translate3d(-50%,0,0)
-    background-color #fff
+    background-color #ff6700
     box-shadow 0 0 3px rgba(0,0,0,0.2)
-    padding 5px 3px
     border-radius 3px
-    &.bounce-enter-active,&.bounce-leave-active
-      transition all 1s
-    &.bounce-enter,&.bounce-leave-to
+    &.bounce-enter-active
+      transition all .5s
+    &.bounce-enter
       opacity 0
     .title
+      padding 7px 4px
       font-size 12px
+      color #ffffff
 </style>

@@ -5,4 +5,5 @@ export default{
   goods:[],
   proId:'',//产品id
   product:{},
+  totalCountRefreshFlag:false
 }

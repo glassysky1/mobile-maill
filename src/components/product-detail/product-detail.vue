@@ -92,14 +92,15 @@
     </div>
     <div class="cart-control">
       <div class="left">
-        <span class="home">
+        <router-link tag="span" to="/" class="home" >
           <i class="iconfont icon-shouye1"></i>
           <div class="text">首页</div>
-        </span>
-        <span class="cart">
+        </router-link>
+        <router-link tag="span" to="/cart" class="cart">
+          <i class="totalCount" v-show="totalCount">{{totalCount}}</i>
           <i class="iconfont icon-gouwuche-copy"></i>
           <div class="text">购物车</div>
-        </span>
+        </router-link>
       </div>
       <div class="right">
         <div class="addCart" @click="addToCart">
@@ -116,7 +117,7 @@ import "swiper/dist/css/swiper.css";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { getProduct } from "api/goods";
-import { addToCart } from "api/user";
+import { addToCart,myCart } from "api/user";
 export default {
   data() {
     return {
@@ -139,22 +140,28 @@ export default {
       colorIndex: 0,
       typeId: 0,
       colorId: 0,
-      color: {}
+      color: {},
+      totalCount:'',
+      colorList:[]
     };
   },
   watch: {
-    //监视选择的类型切换，如果color.count ===0,则colorIndex--保证，颜色选择
-    // typeId() {
-    //   console.log(this.color.count);
-    //   while (this.color.count === 0) {
-    //     this.colorIndex--;
-    //     console.log(1);
-    //   }
-    // }
+   //如果总数发生改变，就提示tab刷新
+    totalCount(){
+      console.log(1);
+      
+      this.setTotalCountRefresh(false)
+      this.$nextTick(()=>{
+      this.setTotalCountRefresh(true)
+      })
+    }
   },
   components: {
     swiper,
     swiperSlide
+  },
+  computed:{
+    ...mapGetters(['userInfo'])
   },
   methods: {
     //选择类型
@@ -202,9 +209,11 @@ export default {
       //默认加载第一个型号，一种颜色
       if (this.product.typeList) {
         let type = this.product.typeList[this.typeIndex];
+        let colorList = this.product.typeList[this.typeIndex].colorList
         let color = this.product.typeList[this.typeIndex].colorList[
           this.colorIndex
         ];
+        this.colorList = colorList
         this.color = color;
         if (this.color.count === 0) {
           //如果此颜色的手机数量为0
@@ -224,28 +233,66 @@ export default {
     },
     //加入购物车
     async addToCart() {
-      this.showFlag = false
+      if (!this.userInfo.uid) {
+        let msg = '未登录'
+        this.setTip(msg)
+        this.$router.push({
+          path:'/login'
+        })
+        return
+      }
+      this.showFlag = false;
       this._loadTypeAndColor();
       //三个关键参数加入购物车
-      console.log(this.proId, this.typeId, this.colorId);
       const { proId, typeId, colorId } = this;
+      //如果库存不到两件，说明只能买一次，买第二次的时候，我们要阻止
+      let currentIndex =0
+      console.log(this.colorList);
+      
+      this.colorList.forEach((color,index) =>{
+        if(color.colorId === colorId){
+          currentIndex = index
+        }
+      })
+
+      if(this.colorList[currentIndex].count <2){
+        if(this.buyCount[colorId]){
+          let msg = '库存不足'
+          this.setTip(msg)
+          return
+        }
+        this.buyCount.push(colorId)
+      }
       const {
         status,
-        data: { code, cartList }
+        data: { code, totalCount, cartList, msg }
       } = await addToCart({
         proId,
         typeId,
         colorId
       });
       if (status === 200) {
-        console.log(cartList);
-
-        let msg = "加入购物车成功";
-        this.setTip(msg);
+        if (code === 0) {
+          this.totalCount = totalCount
+          this.setTip(msg);
+        } else {
+          this.totalCount = totalCount
+          this.setTip(msg);
+        }
+      }
+    },
+    //获取购物车
+    async _myCart(){
+      const {status,data:{code,totalCount}} = await myCart()
+      if(status === 200){
+        if(code ===0){
+          this.totalCount = totalCount
+        }
       }
     },
     ...mapMutations({
-      setTip: "SET_TIP"
+      setTip: "SET_TIP",
+       setTotalCountRefresh:'SET_TOTAL_COUNT_REFRESH'
     })
   },
   mounted() {
@@ -253,7 +300,10 @@ export default {
   },
   created() {
     this._getProduct();
+    this._myCart()
     // this.$store.dispatch('setProduct',this.proId)
+    // 初始化购买数量
+    this.buyCount = []
   }
 };
 </script>
@@ -362,6 +412,18 @@ export default {
       justify-content flex-end
       .cart
         margin-left 20px
+        position relative
+        .totalCount
+          background-color #ed4d41
+          position absolute
+          left 25px
+          top 0
+          padding 2px 4px
+          border-radius 10px
+          color #ffffff
+          font-style normal 
+          font-size 12px
+          text-align center
       .iconfont
         font-size 25px
         color rgba(0, 0, 0, 0.54)

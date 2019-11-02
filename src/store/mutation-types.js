@@ -11,3 +11,4 @@ export const SET_ADDRESS_ID = 'SET_ADDRESS_ID'//根据地址id找到地址，这
 
 export const SET_PRODUCT = 'SET_PRODUCT'//设置产品
 
+export const SET_TOTAL_COUNT_REFRESH = 'SET_TOTAL_COUNT_REFRESH'
