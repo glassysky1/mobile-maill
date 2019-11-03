@@ -71,10 +71,19 @@ export const myCart = () => axios.get('/users/myCart')
 
 //选择或取消购物车元素
 export const myCartSelectItem = ({ proId, typeId, colorId, selected }) => axios.post('/users/myCart/selectItem',
-{ proId, typeId, colorId, selected }
+  { proId, typeId, colorId, selected }
 )
 
 //删除购物车一个元素
 export const myCartDeleteItem = ({ proId, typeId, colorId }) => axios.post('/users/myCart/deleteItem',
   { proId, typeId, colorId }
 )
+
+//支付成功
+export const paySuccess = ({ cartList,payStyle,address,totalPrice,status }) => axios.post('/users/paySuccess', {
+    cartList,
+    payStyle,
+    address,
+    totalPrice,
+    status
+  })

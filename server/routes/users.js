@@ -185,16 +185,16 @@ router.get('/logout', async (ctx) => {
 })
 
 //地址列表
-router.get('/addressList',async (ctx) =>{
-  const  uid = ctx.cookies.get('uid')
-  if(uid){
+router.get('/addressList', async (ctx) => {
+  const uid = ctx.cookies.get('uid')
+  if (uid) {
     const user = await Users.findOne({
       uid
     })
-    
-    const  addressList = user.addressList
-    ctx.body={
-      code:0,
+
+    const addressList = user.addressList
+    ctx.body = {
+      code: 0,
       addressList
     }
   }
@@ -540,7 +540,7 @@ router.get('/myCart', async (ctx) => {
         totalCount += item.count
 
         let number = item.count
-        while (number>0) {
+        while (number > 0) {
           totalPrice += item.nowPrice
           number--
         }
@@ -610,7 +610,7 @@ router.post('/myCart/deleteItem', async (ctx) => {
         currentIndex = index
       }
     })
-    cartList.splice(currentIndex,1)
+    cartList.splice(currentIndex, 1)
 
     await Users.findOne({
       uid
@@ -621,8 +621,39 @@ router.post('/myCart/deleteItem', async (ctx) => {
       code: 0,
       msg: '删除成功'
     }
-
-
   }
 })
+//用户付款
+router.post('/paySuccess', async (ctx) => {
+  const { address, cartList, payStyle, totalPrice, status } = ctx.request.body
+  let order = {
+    orderId: Date.now(),
+    orderCreateTime: Date.now(),
+    cartList,
+    payStyle,
+    address,
+    totalPrice,
+    status
+  }
+  const uid = ctx.cookies.get('uid')
+  if (uid) {
+    const user = await Users.findOne({
+      uid
+    })
+    let orderList = user.orderList
+
+    orderList.push(order)
+
+    await Users.findOne({
+      uid
+    }).update({
+      orderList
+    })
+    ctx.body = {
+      code: 0,
+      msg: '支付成功'
+    }
+  }
+}
+)
 module.exports = router

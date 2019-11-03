@@ -16,6 +16,7 @@ import TV from "components/tv/tv";
 import Computer from "components/computer/computer";
 import ProductDetail from "components/product-detail/product-detail";
 import UserSettle from "components/user-settle/user-settle";
+import PaySuccess from "components/pay-success/pay-success";
 Vue.use(VueRouter)
 
 const routes = [
@@ -93,11 +94,16 @@ const routes = [
     component: UserSettle,
     children: [
       {
-        path: '/selectaddress',
+        path: 'selectaddress',
         component: SelectAddress
+      },
+      {
+        path: 'paysuccess',
+        component: PaySuccess
       }
     ]
   },
+ 
 ]
 
 const router = new VueRouter({

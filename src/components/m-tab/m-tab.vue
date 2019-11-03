@@ -7,13 +7,13 @@
         </span>
         <span class="text">首页</span>
       </router-link>
-      <router-link tag="li" to="/cart" class="tab-item">
+      <div  @click="toCart" class="tab-item">
         <span class="icon icon1">
           <i class="count" v-show="totalCount">{{totalCount}}</i>
           <i class="iconfont icon-cart"></i>
         </span>
         <span class="text">购物车</span>
-      </router-link>
+      </div>
       <router-link tag="li" to="/my" class="tab-item">
         <span class="icon">
           <i class="iconfont icon-my-select"></i>
@@ -25,7 +25,7 @@
 </template>
 <script>
 import {myCart } from "api/user";
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   data(){
     return{
@@ -33,7 +33,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['totalCountRefreshFlag'])
+    ...mapGetters(['totalCountRefreshFlag','userInfo'])
   },
   watch:{
     totalCountRefreshFlag(){
@@ -41,6 +41,15 @@ export default {
     }
   },
   methods:{
+    toCart(){
+      if(!this.userInfo.username){
+        let msg = '未登录'
+        this.setTip(msg)
+        this.$router.push('/login')
+        return
+      }
+      this.$router.push('/cart')
+    },
      async _myCart(){
       const {status,data:{code,totalCount}} = await myCart()
       if(status === 200){
@@ -52,6 +61,9 @@ export default {
         }
       }
     },
+    ...mapMutations({
+      'setTip':'SET_TIP'
+    })
   },
   created(){
     this._myCart()

@@ -1,7 +1,7 @@
 <template>
   <div class="user-settle">
     <header-back title="用户结算" :searchFlag="searchFlag"></header-back>
-    <router-link class="my-address" tag="div" to="selectaddress" v-if="addressList.length">
+    <router-link class="my-address" tag="div" to="/usersettle/selectaddress" v-if="addressList.length">
       <i class="iconfont icon-arrow-sl"></i>
       <div class="title">
         <span class="username">{{addressList[addressListIndex].username}}</span>
@@ -50,20 +50,23 @@
         <span class="total-count">共{{totalCount}}件&nbsp;合计:</span>
         <span class="total-price">{{totalPrice}}</span>
       </div>
-      <div class="right">
+      <div class="right" @click="pay">
         <span class="text">去付款</span>
       </div>
     </div>
     <router-view @selectAddress="selectAddress"></router-view>
+    <confirm ref="confirm" @confirm="confirm" text="确定要付款吗？"></confirm>
   </div>
 </template>
 
 <script>
+
 import HeaderBack from "base/header-back/header-back";
 import alipay from "components/user-settle/alipay.png";
 import wechat from "components/user-settle/wechat.jpg";
-import { mapGetters } from "vuex";
-import { AddressList, myCart } from "api/user";
+import Confirm from "base/confirm/confirm";
+import { mapGetters, mapMutations } from "vuex";
+import { AddressList, myCart,paySuccess } from "api/user";
 export default {
   data() {
     return {
@@ -92,9 +95,50 @@ export default {
     ...mapGetters(["userInfo"])
   },
   components: {
-    HeaderBack
+    HeaderBack,
+    Confirm
   },
   methods: {
+    pay(){
+      this.$refs.confirm.show()
+    },
+    async confirm(){
+      //付款成功
+      //address 
+    let  address = this.addressList[this.addressListIndex]
+      //productList
+    let cartList =  this.cartList
+      //payStyle
+     let payStyle = this.selectedIndex
+
+    let totalPrice = this.totalPrice
+      //状态 0是带发货 1是已发货带收货 3是已收货
+    let  status = 0
+
+    const {status:status1,data:{code,msg}} = await paySuccess(
+      {
+        cartList,
+        payStyle,
+        address,
+        totalPrice,
+        status
+      }
+    )
+    if(status1 ===200){
+      if(code ===0){
+        this.setTip(msg)
+        this.$router.replace({
+          path:'/usersettle/paysuccess',
+          query:{
+            totalPrice,
+            payStyle
+          }
+        })
+      }
+    }
+
+
+    },
     //选择地址
     selectAddress(index) {
       this.addressListIndex = index;
@@ -132,7 +176,10 @@ export default {
           })
         }
       }
-    }
+    },
+    ...mapMutations({
+      setTip:'SET_TIP'
+    })
   },
   created() {
     this._AddressList();
