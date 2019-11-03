@@ -641,13 +641,19 @@ router.post('/paySuccess', async (ctx) => {
       uid
     })
     let orderList = user.orderList
-
+    let cartList = user.cartList
+    cartList.forEach((item,index) =>{
+      if(item.selected === true){
+        cartList.splice(index,1)
+      }
+    })
     orderList.push(order)
 
     await Users.findOne({
       uid
     }).update({
-      orderList
+      orderList,
+      cartList
     })
     ctx.body = {
       code: 0,
@@ -656,4 +662,19 @@ router.post('/paySuccess', async (ctx) => {
   }
 }
 )
+
+//订单
+router.get('/myOrderList', async (ctx) =>{
+  const uid = ctx.cookies.get('uid')
+  if(uid){
+    const user = await Users.findOne({
+      uid
+    })
+    const orderList = user.orderList
+    ctx.body={
+      code:0,
+      orderList
+    }
+  }
+})
 module.exports = router

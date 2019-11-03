@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="my-order-wrapper">
-      <div class="my-order-header">
+      <div class="my-order-header" @click="toMyOrderList">
         <span class="left">我的订单</span>
         <span class="right">
           全部订单
@@ -20,13 +20,15 @@
         </span>
       </div>
       <div class="my-order-content">
-        <span class="left">
+        <span class="left" @click="toWaitSend">
+          <i class="count" v-show="statusCount0">{{statusCount0}}</i>
           <span class="icon">
-            <i class="iconfont icon-daifukuan"></i>
+            <i class="iconfont icon-daifahuo"></i>
           </span>
-          <span class="text">待付款</span>
+          <span class="text">待发货</span>
         </span>
-        <span class="center">
+        <span class="center" @click="toWaitReceive">
+          <i class="count" v-show="statusCount1">{{statusCount1}}</i>
           <span class="icon">
             <i class="iconfont icon-daishouhuo"></i>
           </span>
@@ -41,7 +43,7 @@
       </div>
     </div>
     <div class="my-service">
-      <div class="my-address" @click="toMyAddress" >
+      <div class="my-address" @click="toMyAddress">
         <span class="icon">
           <i class="iconfont icon-dizhi"></i>
         </span>
@@ -52,44 +54,74 @@
       <span class="text">退出登录</span>
     </div>
     <confirm ref="confirm" @confirm="confirm" text="确定要退出登录？"></confirm>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
 import Confirm from "base/confirm/confirm";
 import { mapGetters, mapMutations } from "vuex";
-import { logout } from "api/user";
+import { logout, myOrderList } from "api/user";
 export default {
-  components:{
+  data() {
+    return {
+      statusCount0: 0,
+      statusCount1: 0,
+    };
+  },
+  components: {
     Confirm
   },
   computed: {
-    ...mapGetters(["userInfo",'userStatus'])
+    ...mapGetters(["userInfo", "userStatus"])
   },
   methods: {
-    toMyAddress(){
-      if(!this.userInfo.uid){
-        let msg = '未登录'
-        this.setTip(msg)
-        this.$router.push('/login')
-      }else{
-        this.$router.push('/myaddress')
+    toWaitSend() {
+      let currentIndex = 1;
+      this.$router.push({
+        path: "/my/myorderlist",
+        query: {currentIndex}
+      });
+    },
+    toWaitReceive() {
+      let currentIndex = 2;
+      this.$router.push({
+        path: "/my/myorderlist",
+        query: {currentIndex}
+      });
+    },
+    toMyOrderList() {
+    let currentIndex = 0;
+      this.$router.push({
+        path: "/my/myorderlist",
+        query: {currentIndex}
+      });
+    },
+    toMyAddress() {
+      if (!this.userInfo.uid) {
+        let msg = "未登录";
+        this.setTip(msg);
+        this.$router.push("/login");
+      } else {
+        this.$router.push("/myaddress");
       }
     },
     logout() {
-      this.$refs.confirm.show()
+      this.$refs.confirm.show();
     },
-    async confirm(){
-     const {status,data:{code,msg}} = await logout()
-     if(status ===200){
-       if(code===0){
-         this.setTip(msg)
-         this.setUserStatus(false)
-       }else{
-         this.setTip(msg)
-       }
-     }
+    async confirm() {
+      const {
+        status,
+        data: { code, msg }
+      } = await logout();
+      if (status === 200) {
+        if (code === 0) {
+          this.setTip(msg);
+          this.setUserStatus(false);
+        } else {
+          this.setTip(msg);
+        }
+      }
     },
     loginOrRegister() {
       if (this.userInfo) {
@@ -100,11 +132,35 @@ export default {
       });
       console.log(1);
     },
+    async _myOrderList() {
+      const {
+        status,
+        data: { code, orderList }
+      } = await myOrderList();
+      if (status === 200) {
+        if (code === 0) {
+          console.log(this.orderList);
+          // statusCount0 带发货
+          // statusCount1 待收货
+          orderList.forEach(item => {
+            if (item.status === 0) {
+              this.statusCount0 = this.statusCount0 + 1;
+            }
+            if (item.status === 1) {
+              this.statusCount1 = this.statusCount1 + 1;
+            }
+          });
+        }
+      }
+    },
     ...mapMutations({
       setTip: "SET_TIP",
-      setUserStatus:'SET_USER_STATUS'
+      setUserStatus: "SET_USER_STATUS"
     })
   },
+  created() {
+    this._myOrderList();
+  }
 };
 </script>
 
@@ -162,8 +218,19 @@ export default {
       justify-content space-between
       .left, .center, .right
         display flex
+        position relative
         flex-direction column
         text-align center
+        .count
+          position absolute
+          background-color #ed4d41
+          left 28px
+          top -5px
+          font-size 12px
+          color #fff
+          font-style normal
+          border-radius 50%
+          padding 1px 2px
         .icon
           margin-bottom 5px
           color #BCBCBC

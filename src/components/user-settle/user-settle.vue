@@ -1,7 +1,12 @@
 <template>
   <div class="user-settle">
     <header-back title="用户结算" :searchFlag="searchFlag"></header-back>
-    <router-link class="my-address" tag="div" to="/usersettle/selectaddress" v-if="addressList.length">
+    <router-link
+      class="my-address"
+      tag="div"
+      to="/usersettle/selectaddress"
+      v-if="addressList.length"
+    >
       <i class="iconfont icon-arrow-sl"></i>
       <div class="title">
         <span class="username">{{addressList[addressListIndex].username}}</span>
@@ -60,13 +65,12 @@
 </template>
 
 <script>
-
 import HeaderBack from "base/header-back/header-back";
 import alipay from "components/user-settle/alipay.png";
 import wechat from "components/user-settle/wechat.jpg";
 import Confirm from "base/confirm/confirm";
 import { mapGetters, mapMutations } from "vuex";
-import { AddressList, myCart,paySuccess } from "api/user";
+import { AddressList, myCart, paySuccess } from "api/user";
 export default {
   data() {
     return {
@@ -87,8 +91,8 @@ export default {
       addressList: [],
       addressListIndex: 0,
       cartList: [],
-      totalCount:'',
-      totalPrice:''
+      totalCount: "",
+      totalPrice: ""
     };
   },
   computed: {
@@ -99,45 +103,49 @@ export default {
     Confirm
   },
   methods: {
-    pay(){
-      this.$refs.confirm.show()
+    pay() {
+      this.$refs.confirm.show();
     },
-    async confirm(){
+    async confirm() {
       //付款成功
-      //address 
-    let  address = this.addressList[this.addressListIndex]
+      //address
+      let address = this.addressList[this.addressListIndex];
       //productList
-    let cartList =  this.cartList
+      let cartList = this.cartList;
       //payStyle
-     let payStyle = this.selectedIndex
+      let payStyle = this.selectedIndex;
 
-    let totalPrice = this.totalPrice
+      let totalPrice = this.totalPrice;
       //状态 0是带发货 1是已发货带收货 3是已收货
-    let  status = 0
+      let status = 0;
 
-    const {status:status1,data:{code,msg}} = await paySuccess(
-      {
+      const {
+        status: status1,
+        data: { code, msg }
+      } = await paySuccess({
         cartList,
         payStyle,
         address,
         totalPrice,
         status
-      }
-    )
-    if(status1 ===200){
-      if(code ===0){
-        this.setTip(msg)
-        this.$router.replace({
-          path:'/usersettle/paysuccess',
-          query:{
-            totalPrice,
-            payStyle
-          }
-        })
-      }
-    }
+      });
+      if (status1 === 200) {
+        if (code === 0) {
+          this.setTip(msg);
+          this.setTotalCountRefresh(false)
+          this.$nextTick(()=>{
+          this.setTotalCountRefresh(true)
 
-
+          })
+          this.$router.replace({
+            path: "/usersettle/paysuccess",
+            query: {
+              totalPrice,
+              payStyle
+            }
+          });
+        }
+      }
     },
     //选择地址
     selectAddress(index) {
@@ -169,16 +177,17 @@ export default {
         if (code === 0) {
           this.totalCount = totalCount;
           this.totalPrice = totalPrice;
-          cartList.forEach((item) =>{
-            if(item.selected){
-              this.cartList.push(item)
+          cartList.forEach(item => {
+            if (item.selected) {
+              this.cartList.push(item);
             }
-          })
+          });
         }
       }
     },
     ...mapMutations({
-      setTip:'SET_TIP'
+      setTip: "SET_TIP",
+      setTotalCountRefresh: "SET_TOTAL_COUNT_REFRESH"
     })
   },
   created() {

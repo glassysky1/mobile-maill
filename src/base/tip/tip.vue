@@ -46,7 +46,7 @@ export default {
     z-index 999
     left 50%
     transform translate3d(-50%,0,0)
-    background-color #ff6700
+    background-color #3AB833
     box-shadow 0 0 3px rgba(0,0,0,0.2)
     border-radius 3px
     &.bounce-enter-active

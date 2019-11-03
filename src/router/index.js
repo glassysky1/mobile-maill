@@ -17,6 +17,7 @@ import Computer from "components/computer/computer";
 import ProductDetail from "components/product-detail/product-detail";
 import UserSettle from "components/user-settle/user-settle";
 import PaySuccess from "components/pay-success/pay-success";
+import MyOrderList from "components/my-order-list/my-order-list";
 Vue.use(VueRouter)
 
 const routes = [
@@ -63,7 +64,13 @@ const routes = [
   },
   {
     path: '/my',
-    component: My
+    component: My,
+    children:[
+      {
+        path:'/my/myorderList',
+        component: MyOrderList
+      }
+    ]
   },
   {
     path: '/login',

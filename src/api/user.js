@@ -87,3 +87,5 @@ export const paySuccess = ({ cartList,payStyle,address,totalPrice,status }) => a
     totalPrice,
     status
   })
+//我的订单
+export const myOrderList = () => axios.get('/users/myOrderList')

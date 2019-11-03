@@ -49,14 +49,15 @@
 <script>
 import Confirm from "base/confirm/confirm";
 import HeaderBack from "base/header-back/header-back";
-import { myCart, myCartSelectItem, myCartDeleteItem } from "api/user";
+import { myCart, AddressList, myCartSelectItem, myCartDeleteItem } from "api/user";
 import { mapMutations } from "vuex";
 export default {
   data() {
     return {
       totalCount: "",
       totalPrice: "",
-      cartList: []
+      cartList: [],
+      addressList:[]
     };
   },
   components: {
@@ -66,8 +67,6 @@ export default {
   watch:{
     //如果总数发生改变，就提示tab刷新
     totalCount(){
-      console.log(1);
-      
       this.setTotalCountRefresh(false)
       this.$nextTick(()=>{
       this.setTotalCountRefresh(true)
@@ -76,6 +75,12 @@ export default {
   },
   methods: {
     userSettle(){
+      if (!this.addressList.length) {
+        this.$router.push({
+          path:'/myaddress/addaddress'
+        })
+          return
+      }
       this.$router.push({
 
         path:'/usersettle'
@@ -163,8 +168,21 @@ export default {
     },
     _calculateCartBottom(){
         if(!this.cartList.length){
+          console.log(this.cartList.length);
           this.$refs.cart.style.bottom = '50px'
         }  
+    },
+      async _AddressList() {
+      const {
+        status,
+        data: { code, addressList }
+      } = await AddressList();
+
+      if (status === 200) {
+        if (code === 0) {
+          this.addressList = addressList;
+        }
+      }
     },
     ...mapMutations({
       setTip: "SET_TIP",
@@ -179,6 +197,7 @@ export default {
     this._myCart();
     //确认显示的时候把参数传进来
     this.confirmParams = {};
+    this._AddressList()
   }
 };
 </script>
