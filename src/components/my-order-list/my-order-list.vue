@@ -56,7 +56,7 @@ export default {
     return {
       list: ["全部订单", "待发货", "待收货"],
       currentIndex: 0,
-      orderList:[]
+      orderList:[],
     };
   },
   components: {
@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     matchOrder(status){
+      this.status = status
       // status 
       //0 待发货 1 待收货 2已收货
       // this.currentIndex
@@ -110,7 +111,10 @@ export default {
   },
   created(){
     this._myOrderList()
-    this.selectItem(this.$route.query.currentIndex)
+    if(this.$route.query.currentIndex===undefined){
+      this.$route.query.currentIndex =0
+    }
+    this.selectItem(0)
   },
 };
 </script>

@@ -10,7 +10,6 @@
 <script>
 import Tip from "base/tip/tip";
 import MTab from "components/m-tab/m-tab.vue";
-import { getGoods } from "api/goods";
 import { getUser } from "api/user";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
@@ -53,13 +52,6 @@ export default {
         }
       }
     },
-    async _getGoods() {
-      const {
-        status,
-        data: { goods }
-      } = await getGoods();
-      this.setGoods(goods)
-    },
     ...mapMutations({
       setUserInfo: "SET_USER_INFO",
       setTip: "SET_TIP",
@@ -69,7 +61,6 @@ export default {
   },
   mounted() {
     this._getUser();
-    this._getGoods();
   }
 };
 </script>

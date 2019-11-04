@@ -10,14 +10,11 @@ import MyAddress from "components/my-address/my-address";
 import AddAddress from "components/add-address/add-address";
 import EditAddress from "components/edit-address/edit-address";
 import SelectAddress from "components/select-address/select-address";
-import Recommend from "components/recommend/recommend";
-import Phone from "components/phone/phone";
-import TV from "components/tv/tv";
-import Computer from "components/computer/computer";
 import ProductDetail from "components/product-detail/product-detail";
 import UserSettle from "components/user-settle/user-settle";
 import PaySuccess from "components/pay-success/pay-success";
 import MyOrderList from "components/my-order-list/my-order-list";
+import Search from "components/search/search";
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,30 +28,8 @@ const routes = [
 
     children: [
       {
-        path: 'recommend',
-        component: Recommend,
-        children: [
-          {
-            path: 'productdetail',
-            component: ProductDetail
-          }
-        ]
-      },
-      {
-        path: 'tv',
-        component: TV
-      },
-      {
-        path: 'phone',
-        component: Phone
-      },
-      {
-        path: 'computer',
-        component: Computer
-      },
-      {
-        path: '',
-        redirect: 'recommend'
+        path: 'productdetail',
+        component: ProductDetail
       }
     ]
   },
@@ -110,7 +85,10 @@ const routes = [
       }
     ]
   },
- 
+  {
+    path:'/search',
+    component:Search
+  }
 ]
 
 const router = new VueRouter({

@@ -22,7 +22,7 @@
           <li
             class="item"
             :class="{'active':index ===navItemIndex}"
-            @click="selectNavItem(item.path,index)"
+            @click="selectNavItem(index)"
             v-for="(item,index) in list"
             :key="index"
           >
@@ -32,45 +32,83 @@
       </div>
     </div>
     <div class="home-wrapper">
-      <transition name="slide">
-        <router-view></router-view>
-      </transition>
+      <swiper v-show="navItemIndex===0" :bannerList="bannerList"></swiper>
+      <div class="bottom">
+        <two-column @selectItem="selectItem" :navItemIndex="navItemIndex" :goods="goods"></two-column>
+      </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
+import { getGoods } from "api/goods";
+import Swiper from "base/swiper/swiper";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import TwoColumn from "base/two-column/two-column";
 export default {
   data() {
     return {
+      goods: [],
       list: [
         {
-          name: "推荐",
-          path: "recommend"
+          name: "推荐"
         },
         {
-          name: "手机",
-          path: "phone"
+          name: "手机"
         },
         {
-          name: "电视",
-          path: "tv"
+          name: "电视"
         },
         {
-          name: "笔记本",
-          path: "computer"
+          name: "笔记本"
+        }
+      ],
+      bannerList: [
+        {
+          imageUrl: "http://39.106.77.11:9000/recommend/banner/Bredmi8A.jpg",
+          proId: 10002
+        },
+        {
+          imageUrl: "http://39.106.77.11:9000/recommend/banner/Bxiaomi9.jpg",
+          proId: 10001
         }
       ],
       navItemIndex: 0
     };
   },
+  components: {
+    TwoColumn,
+    Swiper
+  },
   methods: {
     search() {
-      console.log(1);
+      this.$router.push({
+        path:'/search'
+      })
     },
-    selectNavItem(path, index) {
+    selectNavItem(index) {
       this.navItemIndex = index;
-      this.$router.replace(path);
-    }
+    },
+    selectItem(proId) {
+      this.$router.push({
+        path: `/home/productdetail`,
+        query: { proId }
+      });
+    },
+    async _getGoods() {
+      const {
+        status,
+        data: { goods }
+      } = await getGoods();
+      this.goods = goods;
+        this.setGoods(goods)
+    },
+    ...mapMutations({
+      setGoods:'SET_GOODS'
+    })
+  },
+  mounted() {
+    this._getGoods();
   }
 };
 </script>

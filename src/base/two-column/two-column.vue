@@ -1,6 +1,6 @@
 <template>
   <div class="two-colum">
-    <div class="pro" v-for="(item,index) in goods" :key="index" @click="selectItem(item)">
+    <div class="pro" v-show="showItem(item.classify)" v-for="(item,index) in goods" :key="index" @click="selectItem(item)">
       <div class="image-wrapper">
         <img v-lazy="item.coverImg" class="image" alt />
       </div>
@@ -25,9 +25,19 @@ export default {
     goods: {
       type: Array,
       default: () => []
+    },
+    navItemIndex:{
+      type:Number,
+      default:0
     }
   },
   methods:{
+    showItem(index){
+      if(this.navItemIndex===0){
+        return true
+      }
+      return this.navItemIndex === index
+    },
     selectItem(item){
       this.$emit('selectItem',item.proId)
     }

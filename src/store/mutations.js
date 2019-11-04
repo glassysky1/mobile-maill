@@ -11,9 +11,6 @@ export default{
   [types.SET_USER_STATUS](state, userStatus){
     state.userStatus = userStatus
   },
-  [types.SET_GOODS](state,goods){
-    state.goods = goods
-  },
   [types.SET_ADDRESS_ID](state,addressId){
     state.addressId = addressId
   },
@@ -22,5 +19,8 @@ export default{
   },
   [types.SET_TOTAL_COUNT_REFRESH](state,totalCountRefreshFlag){
     state.totalCountRefreshFlag = totalCountRefreshFlag
+  },
+  [types.SET_GOODS](state,goods){
+    state.goods = goods
   }
 }
