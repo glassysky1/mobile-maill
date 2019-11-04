@@ -1,0 +1,543 @@
+{ 
+    "_id" : ObjectId("5dbba6fb24bb1a1838d77580"), 
+    "proId" : NumberInt(10001), 
+    "title" : "小米9", 
+    "minTitle" : "全息幻彩机身，骁龙855", 
+    "subtitle" : "全曲面轻薄设计，全息幻彩玻璃机身 / 骁龙855旗舰处理器 / 20W无线闪充，标配27W有线快充 / 索尼4800万超广角微距三摄 / 极速屏下指纹解锁 / 多功能NFC", 
+    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/1.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/banner/1.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/banner/2.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/banner/3.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(1), 
+    "detailImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/2.png", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100011), 
+            "typeTitle" : "8GB+256GB", 
+            "nowPrice" : NumberInt(2999), 
+            "oldPrice" : NumberInt(3299), 
+            "colorList" : [
+                {
+                    "colorId" : "1000111", 
+                    "colorTitle" : "深空灰", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 深空灰 256GB", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000112), 
+                    "colorTitle" : "全息炫彩紫", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩紫 256GB", 
+                    "count" : NumberInt(888), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000113), 
+                    "colorTitle" : "全息炫彩蓝", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩蓝 256GB", 
+                    "count" : NumberInt(777), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbba6fb24bb1a1838d77581"), 
+    "proId" : NumberInt(10002), 
+    "title" : "Redmi 8A", 
+    "minTitle" : "5000mAh超长续航", 
+    "subtitle" : "5000mAh大电量 / 最高可选4GB+64GB版本 / 支持18W快充 / Type-C充电接口 / 6.22水滴全面屏 / AI人脸解锁 / 骁龙八核处理器 / 超大音量 / 支持无线FM收音机", 
+    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/1.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/banner/1.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/banner/2.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/banner/3.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(1), 
+    "detailImg" : "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/2.png", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100021), 
+            "typeTitle" : "3GB+32GB", 
+            "nowPrice" : NumberInt(699), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : NumberInt(1000211), 
+                    "colorTitle" : "珊瑚橙", 
+                    "colorSubtitle" : "Redmi 8A 3GB+32GB 珊瑚橙 32GB", 
+                    "count" : NumberInt(0), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000212), 
+                    "colorTitle" : "深海蓝", 
+                    "colorSubtitle" : "Redmi 8A 3GB+32GB 深海蓝 32GB", 
+                    "count" : NumberInt(555), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000213), 
+                    "colorTitle" : "耀夜黑", 
+                    "colorSubtitle" : "Redmi 8A 3GB+32GB 耀夜黑 32GB", 
+                    "count" : NumberInt(444), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }, 
+        {
+            "typeId" : NumberInt(100022), 
+            "typeTitle" : "4GB+64GB", 
+            "nowPrice" : NumberInt(799), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : NumberInt(1000221), 
+                    "colorTitle" : "珊瑚橙", 
+                    "colorSubtitle" : "Redmi 8A 4GB+64GB 珊瑚橙 64GB", 
+                    "count" : NumberInt(888), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000222), 
+                    "colorTitle" : "深海蓝", 
+                    "colorSubtitle" : "Redmi 8A 4GB+64GB 深海蓝 64GB", 
+                    "count" : NumberInt(0), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000223), 
+                    "colorTitle" : "耀夜黑", 
+                    "colorSubtitle" : "Redmi 8A 4GB+64GB 耀夜黑 64GB", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfce10b666db296e64c4be"), 
+    "proId" : NumberInt(10003), 
+    "title" : "Redmi Note 8 Pro", 
+    "minTitle" : "6400万全场景四摄", 
+    "subtitle" : "6400万旗舰级全场景四摄 / 前置2000万 AI美颜相机 / G90T专业游戏芯片，液冷散热 / 6.53英寸水滴全面屏 / 4500mAh大电量 / 标配18W快充 / 康宁大猩猩保护玻璃 / 多功能NFC / 红外遥控功能 / Game Turbo2.0游戏加速", 
+    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/RedmiNote8Pro/1.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/phone/content-bottom/RedmiNote8Pro/banner/1.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/RedmiNote8Pro/banner/2.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/RedmiNote8Pro/banner/3.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/RedmiNote8Pro/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(1), 
+    "detailImg" : "http://39.106.77.11:9000/phone/content-bottom/RedmiNote8Pro/2.jpg", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100031), 
+            "typeTitle" : "6GB+64GB", 
+            "nowPrice" : NumberInt(1399), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : NumberInt(1000311), 
+                    "colorTitle" : "贝母白", 
+                    "colorSubtitle" : "Redmi Note 8 Pro 6GB+64GB 贝母白", 
+                    "count" : NumberInt(500), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000312), 
+                    "colorTitle" : "电光灰", 
+                    "colorSubtitle" : "Redmi Note 8 Pro 6GB+64GB 电光灰", 
+                    "count" : NumberInt(555), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000313), 
+                    "colorTitle" : "冰翡翠", 
+                    "colorSubtitle" : "Redmi Note 8 Pro 6GB+64GB 冰翡翠", 
+                    "count" : NumberInt(444), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }, 
+        {
+            "typeId" : NumberInt(100032), 
+            "typeTitle" : "6GB+128GB", 
+            "nowPrice" : NumberInt(1599), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : NumberInt(1000321), 
+                    "colorTitle" : "贝母白", 
+                    "colorSubtitle" : "Redmi Note 8 Pro 6GB+128GB 贝母白", 
+                    "count" : NumberInt(888), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000322), 
+                    "colorTitle" : "电光灰", 
+                    "colorSubtitle" : "Redmi Note 8 Pro 6GB+128GB 电光灰", 
+                    "count" : NumberInt(0), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000323), 
+                    "colorTitle" : "冰翡翠", 
+                    "colorSubtitle" : "Redmi Note 8 Pro 6GB+128GB 冰翡翠", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfd118b666db296e64c4f4"), 
+    "proId" : NumberInt(10004), 
+    "title" : "小米9 Pro 5G", 
+    "minTitle" : "性功能怪兽", 
+    "subtitle" : "5G双卡全网通超高速网络 / 骁龙855Plus旗舰处理器 / 40W有线闪充+30W无线闪充+10W无线反充，4000mAh长续航 / 4800万全焦段三摄 / 超振感横向线性马达 / VC液冷散热 / 高色准三星AMOLED屏幕 / 多功能NFC", 
+    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9pro/1.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9pro/banner/1.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9pro/banner/2.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9pro/banner/3.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/xiaomi9pro/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(1), 
+    "detailImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9pro/2.jpg", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100041), 
+            "typeTitle" : "8GB+128GB", 
+            "nowPrice" : NumberInt(3699), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : NumberInt(1000411), 
+                    "colorTitle" : "梦之白", 
+                    "colorSubtitle" : "小米9 Pro 5G 8GB+128GB 梦之白", 
+                    "count" : NumberInt(500), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000412), 
+                    "colorTitle" : "钛银黑", 
+                    "colorSubtitle" : "小米9 Pro 5G 8GB+128GB 钛银黑", 
+                    "count" : NumberInt(555), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000413), 
+                    "colorTitle" : "冰翡翠", 
+                    "colorSubtitle" : "小米9 Pro 5G 8GB+128GB 冰翡翠", 
+                    "count" : NumberInt(444), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }, 
+        {
+            "typeId" : NumberInt(100042), 
+            "typeTitle" : "8GB+256GB", 
+            "nowPrice" : NumberInt(3799), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : NumberInt(1000421), 
+                    "colorTitle" : "梦之白", 
+                    "colorSubtitle" : "小米9 Pro 5G 8GB+256GB 梦之白", 
+                    "count" : NumberInt(888), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000422), 
+                    "colorTitle" : "钛银黑", 
+                    "colorSubtitle" : "小米9 Pro 5G 8GB+256GB 钛银黑", 
+                    "count" : NumberInt(2222), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000423), 
+                    "colorTitle" : "冰翡翠", 
+                    "colorSubtitle" : "小米9 Pro 5G 8GB+256GB 冰翡翠", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfd3b9b666db296e64c52a"), 
+    "proId" : NumberInt(10005), 
+    "title" : "小米MIX Alpha", 
+    "minTitle" : "5G环绕屏 概念手机", 
+    "subtitle" : "创新环绕屏，极具未来感的智能交互体验 / 1亿像素超高清相机，超大感光元件 / 5G双卡全网通超高速网络 / 骁龙855Plus旗舰处理器 / 纳米硅基锂离子4050mAh电池，40W超级快充 / 钛合金+精密陶瓷+蓝宝石镜片前沿工艺", 
+    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/MixAlpha/MIXAlpha.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/phone/content-bottom/MixAlpha/banner/1.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/MixAlpha/banner/2.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/MixAlpha/banner/3.jpg", 
+        "http://39.106.77.11:9000/phone/content-bottom/MixAlpha/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(1), 
+    "detailImg" : "http://39.106.77.11:9000/phone/content-bottom/MixAlpha/detail.png", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100051), 
+            "typeTitle" : "8GB+256GB", 
+            "nowPrice" : NumberInt(19999), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : "1000511", 
+                    "colorTitle" : "深空灰", 
+                    "colorSubtitle" : "小米MIX Alpha 8GB内存 深空灰 256GB", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000512), 
+                    "colorTitle" : "全息炫彩紫", 
+                    "colorSubtitle" : "小米MIX Alpha 8GB内存 全息炫彩紫 256GB", 
+                    "count" : NumberInt(888), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : NumberInt(1000513), 
+                    "colorTitle" : "全息炫彩蓝", 
+                    "colorSubtitle" : "小米MIX Alpha 8GB内存 全息炫彩蓝 256GB", 
+                    "count" : NumberInt(777), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfd883b666db296e64c55e"), 
+    "proId" : NumberInt(10006), 
+    "title" : "小米电视4A 32英寸", 
+    "minTitle" : "64位四核处理器", 
+    "subtitle" : "64位四核处理器 / 1GB+4GB大内存 / 高清液晶屏 / 第6代画质引擎 / 人工智能系统PatchWall / 轻至4kg", 
+    "coverImg" : "http://39.106.77.11:9000/tv/content/E32A/1.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/tv/content/E32A/banner/1.jpg", 
+        "http://39.106.77.11:9000/tv/content/E32A/banner/2.jpg", 
+        "http://39.106.77.11:9000/tv/content/E32A/banner/3.jpg", 
+        "http://39.106.77.11:9000/tv/content/E32A/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(2), 
+    "detailImg" : "", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100061), 
+            "typeTitle" : "1GB+4GB", 
+            "nowPrice" : NumberInt(688), 
+            "oldPrice" : NumberInt(799), 
+            "colorList" : [
+                {
+                    "colorId" : "1000611", 
+                    "colorTitle" : "默认", 
+                    "colorSubtitle" : "小米电视4A 32英寸 默认", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfda38b666db296e64c57e"), 
+    "proId" : NumberInt(10007), 
+    "title" : "小米电视4A 55英寸", 
+    "minTitle" : "64位四核处理器", 
+    "subtitle" : "超高清屏 / 2GB+8GB / 真四核64位高性能处理器 / 超窄边框 / 智能语音 / 杜比解码 / 海量高清片源 / 支持壁挂", 
+    "coverImg" : "http://39.106.77.11:9000/tv/content/xiaomiTV4A/1.jpg", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/tv/content/xiaomiTV4A/banner/1.webp"
+    ], 
+    "classify" : NumberInt(2), 
+    "detailImg" : "", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100071), 
+            "typeTitle" : "2GB+8GB", 
+            "nowPrice" : NumberInt(1599), 
+            "oldPrice" : NumberInt(1699), 
+            "colorList" : [
+                {
+                    "colorId" : "1000711", 
+                    "colorTitle" : "默认", 
+                    "colorSubtitle" : "小米电视4A 55英寸 默认", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfdbc6b666db296e64c58f"), 
+    "proId" : NumberInt(10008), 
+    "title" : "RedmiBook 14 增强版 ", 
+    "minTitle" : "全新的多彩十代酷睿轻薄本", 
+    "subtitle" : "全新十代酷睿处理器 / MX250独显 / 14寸超窄边框高清屏 / 小米手环极速解锁 / 炫酷多彩任你挑选", 
+    "coverImg" : "http://39.106.77.11:9000/computer/content/redbook14/1.webp", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/computer/content/redbook14/banner/1.jpg", 
+        "http://39.106.77.11:9000/computer/content/redbook14/banner/2.jpg", 
+        "http://39.106.77.11:9000/computer/content/redbook14/banner/3.jpg", 
+        "http://39.106.77.11:9000/computer/content/redbook14/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(3), 
+    "detailImg" : "http://39.106.77.11:9000/computer/content/redbook14/2.png", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100081), 
+            "typeTitle" : "i5 8G 512GB MX250", 
+            "nowPrice" : NumberInt(4499), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : "1000811", 
+                    "colorTitle" : "月光银", 
+                    "colorSubtitle" : "RedmiBook 14 I5/8G/512G SATA/MX250 银色", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : "1000812", 
+                    "colorTitle" : "若雪粉", 
+                    "colorSubtitle" : "RedmiBook 14 I5/8G/512G SATA/MX250 粉色", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : "1000813", 
+                    "colorTitle" : "深空灰", 
+                    "colorSubtitle" : "RedmiBook 14 I5/8G/512G SATA/MX250 灰色", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }, 
+        {
+            "typeId" : NumberInt(100082), 
+            "typeTitle" : "i7 8G 512GB MX250", 
+            "nowPrice" : NumberInt(4999), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : "1000821", 
+                    "colorTitle" : "月光银", 
+                    "colorSubtitle" : "RedmiBook 14 I7/8G/512G SATA/MX250 银色", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : "1000822", 
+                    "colorTitle" : "若雪粉", 
+                    "colorSubtitle" : "RedmiBook 14 I5/8G/512G SATA/MX250 粉色", 
+                    "count" : NumberInt(0), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }, 
+                {
+                    "colorId" : "1000823", 
+                    "colorTitle" : "深空灰", 
+                    "colorSubtitle" : "RedmiBook 14 I7/8G/512G SATA/MX250 灰色", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5dbfdef2b666db296e64c5a4"), 
+    "proId" : NumberInt(10009), 
+    "title" : "小米笔记本15.6\" 2019款", 
+    "minTitle" : "全面均衡的国民轻薄本", 
+    "subtitle" : "全新第八代 ／ 独立显卡，2GB显存 ／ 双风扇散热系统 ／ 双内存大硬盘可扩展 ／ 7大接口 ／ 独立数字键盘", 
+    "coverImg" : "http://39.106.77.11:9000/computer/content/xiaomi15.6/1.webp", 
+    "bannerList" : [
+        "http://39.106.77.11:9000/computer/content/xiaomi15.6/banner/1.jpg", 
+        "http://39.106.77.11:9000/computer/content/xiaomi15.6/banner/2.jpg", 
+        "http://39.106.77.11:9000/computer/content/xiaomi15.6/banner/3.jpg", 
+        "http://39.106.77.11:9000/computer/content/xiaomi15.6/banner/4.jpg"
+    ], 
+    "classify" : NumberInt(3), 
+    "detailImg" : "http://39.106.77.11:9000/computer/content/xiaomi15.6/2.png", 
+    "typeList" : [
+        {
+            "typeId" : NumberInt(100091), 
+            "typeTitle" : "15.6 笔记本 i7 8G MX110", 
+            "nowPrice" : NumberInt(4699), 
+            "oldPrice" : NumberInt(4899), 
+            "colorList" : [
+                {
+                    "colorId" : "1000911", 
+                    "colorTitle" : "灰色", 
+                    "colorSubtitle" : "小米笔记本15.6  2019款 四核i7 16G 512GB 独显 深空灰", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }, 
+        {
+            "typeId" : NumberInt(100092), 
+            "typeTitle" : "15.6 笔记本 i5 8G MX110", 
+            "nowPrice" : NumberInt(4499), 
+            "oldPrice" : NumberInt(-1), 
+            "colorList" : [
+                {
+                    "colorId" : "1000921", 
+                    "colorTitle" : "月光银", 
+                    "colorSubtitle" : "15.6 笔记本 i5 8G MX110 深空灰", 
+                    "count" : NumberInt(999), 
+                    "status" : NumberInt(0), 
+                    "number" : NumberInt(0)
+                }
+            ]
+        }
+    ]
+}

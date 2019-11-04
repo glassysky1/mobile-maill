@@ -61,7 +61,7 @@ let goodsSchema = new mongoose.Schema({
     }
   ],
   classify:{
-    type:String
+    type:Number
   }
 })
 

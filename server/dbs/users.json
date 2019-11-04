@@ -1,0 +1,214 @@
+{ 
+    "_id" : ObjectId("5dbe9ba2a3db8a1ec09317be"), 
+    "username" : "xiaoyue", 
+    "password" : "e10adc3949ba59abbe56e057f20f883e", 
+    "pwdQuestion" : "娘子", 
+    "pwdAnswer" : "啊哈", 
+    "uid" : 1572772770148.0, 
+    "addressList" : [
+        {
+            "_id" : ObjectId("5dbe9dfca3db8a1ec09317c2"), 
+            "username" : "袋熊啊", 
+            "city" : "江苏宿迁", 
+            "streetName" : "黄墩镇柳湖村九组", 
+            "postcode" : NumberInt(223800), 
+            "tel" : 18361820796.0, 
+            "isDefault" : true, 
+            "addressId" : 1572773372673.0
+        }
+    ], 
+    "cartList" : [
+        {
+            "selected" : true, 
+            "_id" : ObjectId("5dbec09289990a0ab84f3076"), 
+            "proId" : NumberInt(10002), 
+            "typeId" : NumberInt(100021), 
+            "colorId" : NumberInt(1000212), 
+            "count" : NumberInt(1), 
+            "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/1.jpg", 
+            "colorSubtitle" : "Redmi 8A 3GB+32GB 深海蓝 32GB", 
+            "nowPrice" : NumberInt(699)
+        }
+    ], 
+    "orderList" : [
+        {
+            "_id" : ObjectId("5dbe9e05a3db8a1ec09317c3"), 
+            "address" : {
+                "username" : "袋熊啊", 
+                "city" : "江苏宿迁", 
+                "streetName" : "黄墩镇柳湖村九组", 
+                "postcode" : NumberInt(223800), 
+                "tel" : 18361820796.0, 
+                "addressId" : 1572773372673.0
+            }, 
+            "cartList" : [
+                {
+                    "_id" : ObjectId("5dbe9bbda3db8a1ec09317bf"), 
+                    "proId" : NumberInt(10001), 
+                    "typeId" : NumberInt(100011), 
+                    "colorId" : NumberInt(1000111), 
+                    "count" : NumberInt(2), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/1.jpg", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩紫 256GB", 
+                    "nowPrice" : NumberInt(2999)
+                }
+            ], 
+            "orderId" : 1572773381863.0, 
+            "orderCreateTime" : 1572773381863.0, 
+            "payStyle" : NumberInt(0), 
+            "totalPrice" : NumberInt(5998), 
+            "status" : NumberInt(1)
+        }, 
+        {
+            "_id" : ObjectId("5dbe9f075c59f4455c58dc73"), 
+            "address" : {
+                "username" : "袋熊啊", 
+                "city" : "江苏宿迁", 
+                "streetName" : "黄墩镇柳湖村九组", 
+                "postcode" : NumberInt(223800), 
+                "tel" : 18361820796.0, 
+                "addressId" : 1572773372673.0
+            }, 
+            "cartList" : [
+                {
+                    "_id" : ObjectId("5dbe9ef05c59f4455c58dc6c"), 
+                    "proId" : NumberInt(10002), 
+                    "typeId" : NumberInt(100021), 
+                    "colorId" : NumberInt(1000212), 
+                    "count" : NumberInt(2), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/1.jpg", 
+                    "colorSubtitle" : "Redmi 8A 3GB+32GB 深海蓝 32GB", 
+                    "nowPrice" : NumberInt(699)
+                }
+            ], 
+            "orderId" : 1572773639322.0, 
+            "orderCreateTime" : 1572773639322.0, 
+            "payStyle" : NumberInt(0), 
+            "totalPrice" : NumberInt(1398), 
+            "status" : NumberInt(0)
+        }, 
+        {
+            "_id" : ObjectId("5dbe9f185c59f4455c58dc7d"), 
+            "address" : {
+                "username" : "袋熊啊", 
+                "city" : "江苏宿迁", 
+                "streetName" : "黄墩镇柳湖村九组", 
+                "postcode" : NumberInt(223800), 
+                "tel" : 18361820796.0, 
+                "addressId" : 1572773372673.0
+            }, 
+            "cartList" : [
+                {
+                    "_id" : ObjectId("5dbe9bbda3db8a1ec09317bf"), 
+                    "proId" : NumberInt(10001), 
+                    "typeId" : NumberInt(100011), 
+                    "colorId" : NumberInt(1000111), 
+                    "count" : NumberInt(2), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/1.jpg", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩紫 256GB", 
+                    "nowPrice" : NumberInt(2999)
+                }
+            ], 
+            "orderId" : 1572773656041.0, 
+            "orderCreateTime" : 1572773656041.0, 
+            "payStyle" : NumberInt(1), 
+            "totalPrice" : NumberInt(5998), 
+            "status" : NumberInt(0)
+        }, 
+        {
+            "_id" : ObjectId("5dbe9fb35c59f4455c58dc8d"), 
+            "address" : {
+                "username" : "袋熊啊", 
+                "city" : "江苏宿迁", 
+                "streetName" : "黄墩镇柳湖村九组", 
+                "postcode" : NumberInt(223800), 
+                "tel" : 18361820796.0, 
+                "addressId" : 1572773372673.0
+            }, 
+            "cartList" : [
+                {
+                    "_id" : ObjectId("5dbe9fa95c59f4455c58dc88"), 
+                    "proId" : NumberInt(10001), 
+                    "typeId" : NumberInt(100011), 
+                    "colorId" : NumberInt(1000112), 
+                    "count" : NumberInt(1), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/1.jpg", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩蓝 256GB", 
+                    "nowPrice" : NumberInt(2999)
+                }
+            ], 
+            "orderId" : 1572773811455.0, 
+            "orderCreateTime" : 1572773811455.0, 
+            "payStyle" : NumberInt(1), 
+            "totalPrice" : NumberInt(2999), 
+            "status" : NumberInt(0)
+        }, 
+        {
+            "_id" : ObjectId("5dbebf5e89990a0ab84f306a"), 
+            "address" : {
+                "username" : "袋熊啊", 
+                "city" : "江苏宿迁", 
+                "streetName" : "黄墩镇柳湖村九组", 
+                "postcode" : NumberInt(223800), 
+                "tel" : 18361820796.0, 
+                "addressId" : 1572773372673.0
+            }, 
+            "cartList" : [
+                {
+                    "_id" : ObjectId("5dbe9f9f5c59f4455c58dc85"), 
+                    "proId" : NumberInt(10001), 
+                    "typeId" : NumberInt(100011), 
+                    "colorId" : NumberInt(1000111), 
+                    "count" : NumberInt(2), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/1.jpg", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩紫 256GB", 
+                    "nowPrice" : NumberInt(2999)
+                }
+            ], 
+            "orderId" : 1572781918722.0, 
+            "orderCreateTime" : 1572781918722.0, 
+            "payStyle" : NumberInt(1), 
+            "totalPrice" : NumberInt(5998), 
+            "status" : NumberInt(0)
+        }, 
+        {
+            "_id" : ObjectId("5dbfc46615c4d343708307ba"), 
+            "orderId" : 1572848742641.0, 
+            "orderCreateTime" : 1572848742641.0, 
+            "cartList" : [
+                {
+                    "_id" : ObjectId("5dbfc45f15c4d343708307b7"), 
+                    "proId" : NumberInt(10001), 
+                    "typeId" : NumberInt(100011), 
+                    "colorId" : NumberInt(1000112), 
+                    "count" : NumberInt(1), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/xiaomi9/1.jpg", 
+                    "colorSubtitle" : "小米9 全网通版 8GB内存 全息炫彩蓝 256GB", 
+                    "nowPrice" : NumberInt(2999)
+                }, 
+                {
+                    "_id" : ObjectId("5dbec09289990a0ab84f3076"), 
+                    "proId" : NumberInt(10002), 
+                    "typeId" : NumberInt(100021), 
+                    "colorId" : NumberInt(1000212), 
+                    "count" : NumberInt(1), 
+                    "coverImg" : "http://39.106.77.11:9000/phone/content-bottom/Redmi8A/1.jpg", 
+                    "colorSubtitle" : "Redmi 8A 3GB+32GB 深海蓝 32GB", 
+                    "nowPrice" : NumberInt(699)
+                }
+            ], 
+            "payStyle" : NumberInt(0), 
+            "address" : {
+                "username" : "袋熊啊", 
+                "city" : "江苏宿迁", 
+                "streetName" : "黄墩镇柳湖村九组", 
+                "postcode" : NumberInt(223800), 
+                "tel" : 18361820796.0, 
+                "addressId" : 1572773372673.0
+            }, 
+            "totalPrice" : NumberInt(3698), 
+            "status" : NumberInt(0)
+        }
+    ], 
+    "__v" : NumberInt(0)
+}
