@@ -21,14 +21,14 @@
       </div>
       <div class="my-order-content">
         <span class="left" @click="toWaitSend">
-          <i class="count" v-show="statusCount0">{{statusCount0}}</i>
+          <i class="count" v-show="statusCount1 && userStatus">{{statusCount0}}</i>
           <span class="icon">
             <i class="iconfont icon-daifahuo"></i>
           </span>
           <span class="text">待发货</span>
         </span>
         <span class="center" @click="toWaitReceive">
-          <i class="count" v-show="statusCount1">{{statusCount1}}</i>
+          <i class="count" v-show="statusCount1 && userStatus">{{statusCount1}}</i>
           <span class="icon">
             <i class="iconfont icon-daishouhuo"></i>
           </span>
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       statusCount0: 0,
-      statusCount1: 0,
+      statusCount1: 0
     };
   },
   components: {
@@ -77,24 +77,42 @@ export default {
   },
   methods: {
     toWaitSend() {
+      if (!this.userInfo.uid) {
+        this.$router.push("/login");
+        let msg = "未登录";
+        this.setTip(msg);
+        return;
+      }
       let currentIndex = 1;
       this.$router.push({
         path: "/my/myorderlist",
-        query: {currentIndex}
+        query: { currentIndex }
       });
     },
     toWaitReceive() {
+      if (!this.userInfo.uid) {
+        this.$router.push("/login");
+        let msg = "未登录";
+        this.setTip(msg);
+        return;
+      }
       let currentIndex = 2;
       this.$router.push({
         path: "/my/myorderlist",
-        query: {currentIndex}
+        query: { currentIndex }
       });
     },
     toMyOrderList() {
-    let currentIndex = 0;
+      if (!this.userInfo.uid) {
+        this.$router.push("/login");
+        let msg = "未登录";
+        this.setTip(msg);
+        return;
+      }
+      let currentIndex = 0;
       this.$router.push({
         path: "/my/myorderlist",
-        query: {currentIndex}
+        query: { currentIndex }
       });
     },
     toMyAddress() {
