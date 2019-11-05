@@ -81,8 +81,22 @@ export default {
         })
           return
       }
-      this.$router.push({
 
+      //如果购物车里面都是没有选中的，则提示无法提交订单
+      let count =0
+      this.cartList.forEach((item) =>{
+        console.log(item);
+        
+        if(item.selected ===false ){
+          count ++
+        }
+      })
+      if(count ===this.cartList.length){
+        let msg = '请选中商品'
+        this.setTip(msg)
+        return
+      }
+      this.$router.push({
         path:'/usersettle'
       }
       )
@@ -90,7 +104,7 @@ export default {
     //回到商品详情
      selectItem(proId) {
       this.$router.push({
-        path: `/home/recommend/productdetail`,
+        path: `/home/productdetail`,
         query:{proId}
       });
       

@@ -150,7 +150,7 @@ router.post('/updatePassword', async (ctx) => {
   const user = await Users.where({
     username,
     pwdAnswer
-  }).update({
+  }).updateOne({
     password
   })
 
@@ -256,7 +256,7 @@ router.post('/addAddress', async (ctx) => {
     }
     await Users.findOne({
       uid
-    }).update({
+    }).updateOne({
       addressList
 
     })
@@ -291,7 +291,7 @@ router.post('/deleteAddress', async (ctx) => {
     addressList.splice(deleteIndex, 1)
     await Users.findOne({
       uid
-    }).update({
+    }).updateOne({
       addressList
 
     })
@@ -397,7 +397,7 @@ router.post('/editAddress', async (ctx) => {
     }
     await Users.findOne({
       uid
-    }).update({
+    }).updateOne({
       addressList
     })
     ctx.body = {
@@ -507,7 +507,7 @@ router.post('/addToCart', async (ctx) => {
 
         await Users.findOne({
           uid
-        }).update({
+        }).updateOne({
           cartList
         })
 
@@ -546,7 +546,7 @@ router.get('/myCart', async (ctx) => {
         }
       }
     })
-
+    
     ctx.body = {
       code: 0,
       totalCount,
@@ -581,7 +581,7 @@ router.post('/myCart/selectItem', async (ctx) => {
     cartList[currentIndex].selected = selected
     await Users.findOne({
       uid
-    }).update({
+    }).updateOne({
       cartList
     })
     ctx.body = {
@@ -614,7 +614,7 @@ router.post('/myCart/deleteItem', async (ctx) => {
 
     await Users.findOne({
       uid
-    }).update({
+    }).updateOne({
       cartList
     })
     ctx.body = {
@@ -641,19 +641,21 @@ router.post('/paySuccess', async (ctx) => {
       uid
     })
     let orderList = user.orderList
-    let cartList = user.cartList
-    cartList.forEach((item,index) =>{
-      if(item.selected === true){
-        cartList.splice(index,1)
-      }
+    let oldCartList = user.cartList
+    let newCartList=[]
+    newCartList = oldCartList.filter((item,index) =>{
+        return item.selected === false
     })
-    orderList.push(order)
+    console.log(newCartList);
+    
+
+    orderList.unshift(order)
 
     await Users.findOne({
       uid
-    }).update({
+    }).updateOne({
       orderList,
-      cartList
+      cartList:newCartList
     })
     ctx.body = {
       code: 0,

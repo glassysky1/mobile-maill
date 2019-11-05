@@ -247,7 +247,6 @@ export default {
       const { proId, typeId, colorId } = this;
       //如果库存不到两件，说明只能买一次，买第二次的时候，我们要阻止
       let currentIndex =0
-      console.log(this.colorList);
       
       this.colorList.forEach((color,index) =>{
         if(color.colorId === colorId){

@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       query: "",
-      goods: []
+      goods: [],
     };
   },
   components: {
@@ -82,13 +82,12 @@ export default {
     text-align center
     margin-top 30%
     font-style italic
-    color rgba(0,0,0,.56)
+    color rgba(0, 0, 0, 0.56)
     font-size 18px
-
   .content
     padding 15px 4%
     position fixed
-    top 50px
+    top 86px
     left 0
     right 0
     bottom 0
