@@ -7,14 +7,20 @@
       </div>
     </div>
     <div class="my-order-list-content">
-      <div class="item" v-show="matchOrder(order.status)"  v-for="(order ,index) in orderList" :key="index">
+      <div
+        class="item"
+        v-show="matchOrder(order.status)"
+        v-for="(order ,index) in orderList"
+        :key="index"
+      >
         <div class="title">
           <div class="left">
             <div class="order-date">
               <span class="text">订单日期:{{order.orderCreateTime|date-format}}</span>
             </div>
             <div class="order-code">
-              <span class="text">订单编号:</span>{{order.orderId}}
+              <span class="text">订单编号:</span>
+              {{order.orderId}}
             </div>
           </div>
           <div class="right">
@@ -24,11 +30,16 @@
           </div>
         </div>
         <div class="product-list">
-          <div class="product-item" v-for="(item,index) in order.cartList" :key="index">
+          <div
+            class="product-item"
+            @click="selectProduct(item.proId)"
+            v-for="(item,index) in order.cartList"
+            :key="index"
+          >
             <div class="image-wrapper">
               <img width="64" :src="item.coverImg" alt class="image" />
             </div>
-            <span class="product-name">{{item.colorSubtitle}}</span>
+            <span class="product-name">{{item.count}}件 {{item.colorSubtitle}}</span>
           </div>
         </div>
         <div class="total">
@@ -47,42 +58,46 @@
 import Vue from "vue";
 import HeaderBack from "base/header-back/header-back";
 import { myOrderList } from "api/user";
-import format from 'date-fns/format'
-Vue.filter('date-format', function (value, formatStr ='yyyy-MM-dd HH:mm:ss') {
-  return format(value,formatStr)
-})
+import format from "date-fns/format";
+Vue.filter("date-format", function(value, formatStr = "yyyy-MM-dd HH:mm:ss") {
+  return format(value, formatStr);
+});
 export default {
   data() {
     return {
       list: ["全部订单", "待发货", "待收货"],
       currentIndex: 0,
-      orderList:[],
+      orderList: []
     };
   },
   components: {
     HeaderBack
   },
   methods: {
-    matchOrder(status){
-      this.status = status
-      // status 
+    selectProduct(proId) {
+      this.$router.push({
+        path: `/home/productdetail`,
+        query: { proId }
+      });
+    },
+    matchOrder(status) {
+      this.status = status;
+      // status
       //0 待发货 1 待收货 2已收货
       // this.currentIndex
       //0全部订单 1待发货 2带收货
-      if(this.currentIndex===0){
-        return true
-      }else{
-
-        return status+1 ===this.currentIndex 
+      if (this.currentIndex === 0) {
+        return true;
+      } else {
+        return status + 1 === this.currentIndex;
       }
-    }
-    ,
-    itemCount(cartList){
-      let totalCount =0
-      cartList.forEach(item=>{
-        totalCount += item.count
-      })
-      return totalCount
+    },
+    itemCount(cartList) {
+      let totalCount = 0;
+      cartList.forEach(item => {
+        totalCount += item.count;
+      });
+      return totalCount;
     },
     selectItem(index) {
       this.currentIndex = index;
@@ -94,7 +109,7 @@ export default {
       } = await myOrderList();
       if (status === 200) {
         if (code === 0) {
-          this.orderList = orderList
+          this.orderList = orderList;
           // statusCount0 带发货
           // statusCount1 待收货
           // orderList.forEach(item => {
@@ -109,13 +124,13 @@ export default {
       }
     }
   },
-  created(){
-    this._myOrderList()
-    if(this.$route.query.currentIndex===undefined){
-      this.$route.query.currentIndex =0
+  created() {
+    this._myOrderList();
+    if (this.$route.query.currentIndex === undefined) {
+      this.$route.query.currentIndex = 0;
     }
-    this.selectItem(0)
-  },
+    this.selectItem(0);
+  }
 };
 </script>
 
@@ -145,7 +160,7 @@ export default {
     left 0
     background-color #fff
     right 0
-    overflow auto 
+    overflow auto
     bottom 0
     .item
       border-top 10px solid #ececec
