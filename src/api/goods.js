@@ -10,3 +10,7 @@ export const getProductType = (proId) => axios.post('/goods/getProductType',{
 export const getProduct = (proId) => axios.post('/goods/getProduct',{
   proId
 })
+
+export const search = (keyword) => axios.post('/goods/search',{
+  keyword
+})

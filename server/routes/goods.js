@@ -1,7 +1,6 @@
 const router = require('koa-router')()
 const Goods = require('../dbs/models/goods')
 
-
 router.prefix('/goods')
 
 router.get('/getGoods', async function (ctx) {
@@ -32,5 +31,19 @@ router.post('/getProduct', async (ctx) => {
       typeList:[]
     }
   }
+})
+//根据关键词获取商品
+router.post('/search',async (ctx) =>{
+  const {keyword} = ctx.request.body
+  const goods = await Goods.find(
+    {
+      title:new RegExp(keyword)
+    }
+  )
+    ctx.body={
+      code:0,
+      goods
+    }
+
 })
 module.exports = router

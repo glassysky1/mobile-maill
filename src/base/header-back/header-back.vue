@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    input: _.debounce(async () => {
+    input: _.debounce(async function () {
       this.$emit("input", this.query);
     }, 300)
   }

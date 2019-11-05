@@ -7,9 +7,9 @@
       <div class="content">
         <h2 class="title">{{item.title}}</h2>
         <p class="minTitle">{{item.minTitle}}</p>
-        <p class="price" v-if="item.type">
-          <span class="nowPrice">￥{{item.type[0].nowPrice}}</span>
-          <span class="oldPrice" v-if="(item.type[0].oldPrice!=-1)">￥{{item.type[0].oldPrice}}</span>
+        <p class="price" v-if="item.typeList">
+          <span class="nowPrice">￥{{item.typeList[0].nowPrice}}</span>
+          <span class="oldPrice" v-if="(item.typeList[0].oldPrice!=-1)">￥{{item.typeList[0].oldPrice}}</span>
         </p>
         <button class="btn">
           <span class="text">立即购买</span>
